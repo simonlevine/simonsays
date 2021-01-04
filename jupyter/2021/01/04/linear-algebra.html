@@ -345,12 +345,8 @@ iii) The complement to a magic square is derived from subtracting every number i
     <span class="n">row_sums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">diagonal_sums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">M</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">M</span><span class="p">))])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-    <span class="c1"># print(diagonal_sums)</span>
-
     <span class="n">magic_num_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span> <span class="p">(</span><span class="n">column_sums</span><span class="p">,</span><span class="n">row_sums</span><span class="p">,</span><span class="n">diagonal_sums</span><span class="p">)</span> <span class="p">))</span>
-
-
+    
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">magic_num_sum</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Magic number is </span><span class="si">{</span><span class="n">magic_num_sum</span><span class="si">}</span><span class="s1"> with order </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">.'</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
