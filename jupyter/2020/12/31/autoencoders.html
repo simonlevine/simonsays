@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -172,6 +172,8 @@ $$\to via\ backprop \to \hat{w} = \arg\min_w E\left[ \| x-w^TWx\|^2 \right]$$
 </p>
 <p>This is equivalent to discovering a basis that spans the principle components of the input, as we discover the directions of maximum energy, equal to the variance of $X$ if $X$ is a zero-mean random variable. In other words, we find a linear mapping of the original features to the principle axis of the data.</p>
 <p>Finally, if the learned decoder weight is <em>not</em> the same weight as the input weight (i.e., $U^T \not = W^T$),  we still learn a hidden representation $z$ that lies along the major axis of the input $X$. The minimum error direction here is by definition the pinciple eigen vector of $X$.</p>
+<p>We could then find a useful component of $X$ (described perhaps by our training process or assumptions)by then projecting the eigen vector onto $X$. Again, if $U^T = W^T$, we arrive at the principle component(s) of $X$.</p>
+<p>Of course, this is a roundabout method of obtaining principle components, but I hope it shows the rigorous grounding and versatility of perceptrons in learning representations of data.</p>
 
 </div>
 </div>
