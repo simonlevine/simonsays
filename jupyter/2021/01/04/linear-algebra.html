@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      7 min read
+      8 min read
     
 </span></p>
 
@@ -160,7 +160,7 @@ window.onload = wrap_img;
 <a class="anchor" href="#Numpy-Basics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numpy Basics<a class="anchor-link" href="#Numpy-Basics"> </a>
 </h2>
 <p>We will now go over some basic approaches on a seemingly simple matrix for illustrative purposes. Hopefully some of the efficient and useful properties of Numpy become apparent.</p>
-<p>A favorite work by a favorite artist, Dürer's <em>Melencolia I</em> (1514) includes sophisticated use of mathematical allegory, particularly in the top-right corner.</p>
+<p>A favorite work by a favorite artist, Dürer's <em>Melencolia I</em> (1514) includes sophisticated use of mathematical allegory, particularly in the top-right corner. It turns out Dürer actually makes many interesting points through his art, something you wouldn't expect from his messiah complex.</p>
 <p><figure>
   
     <img class="docimage" src="/simonsays/images/copied_from_nb/melancholia.jpg" alt="" style="max-width: 400px">
@@ -1085,8 +1085,16 @@ iii) The complement to a magic square is derived from subtracting every number i
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Note the interesting property of magic squares: the principal (largest) eigenvalue of a magic square composed of positive
-elements <strong>is its magic constant</strong>! Of further note, but not applicable here, is the observation that if a magic square has some negative elements, then its magic
-constant is one of its eigenvalues.[^1]</p>
+elements <strong>is its magic constant</strong>! Of further note, but not applicable here, is the observation that if a magic square has some negative elements, then its magic constant is one of its eigenvalues.[^1]</p>
+<p>To show the first point, consider that $[1,1,...,1]^T$ is an eigenvector of a matrix $M$ if every row sums to the same value $k$. This can be shown by computing $|M-\lambda I| = 0$ for a matrix $M$ where all rows sum to the same constant $k$. Substituting values and simplifying, $k$ is an eigenvalue. The same holds for columns that sum to the same constant.</p>
+<p>Now, we want to show that the entries in the vector $Mv$ are equal to $kv$, where $k$ is both the magic number and an eigenvalue, and $v$ is an eigenvector of $M$. Recall that the sum of all elements in an $n \times n$ magic square $M^*$ is, by construction, equal to $\frac{n(n^2+1)}{2}$. Thus, since a magic square $M^*$ indeed does have each row sum to $k$, we have that $Av = kv$ for $[1,1,...,1]^T$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This gives us another way to find the magic number of a magic square.</p>
 
 </div>
@@ -1134,7 +1142,7 @@ constant is one of its eigenvalues.[^1]</p>
 <h1 id="Conclusion">
 <a class="anchor" href="#Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion<a class="anchor-link" href="#Conclusion"> </a>
 </h1>
-<p>This concludes discussion of magic squares, essential numpy, and some linear-algebraic approaches to simple matrices. From here, I hope to move to much more complex topics involving far more abstract data types and approaches to manipulation. Nonetheless, foundations will always be present.</p>
+<p>This concludes discussion (for now) of magic squares, essential Numpy, and some linear-algebraic approaches to simple matrices. From here, I hope to move to much more complex topics involving far more abstract data types and approaches to manipulation. Nonetheless, foundations will always be important and most likely present under the hood.</p>
 
 </div>
 </div>
