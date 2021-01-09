@@ -14,3 +14,4 @@ _notebooks/.ipynb_checkpoints
 __pycache__
 .DS_Store
 2020-02-20-test.ipynb
+data/2021-01-09/Immunodeficiency_Nasal_swabs.h5ad
