@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -599,10 +599,16 @@ window.onload = wrap_img;
 <h2 id="Bayes'-Rule">
 <a class="anchor" href="#Bayes'-Rule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bayes' Rule<a class="anchor-link" href="#Bayes'-Rule"> </a>
 </h2>
-<p>Combining the definitions of conditional probility and joint probability, we can describe Bayes' Rule:</p>
+<p>Combining the definitions of conditional probility $P(A|B) = \frac{P(A,B)}{P(B)}$ and joint probability $P(A,B) = P(A|B)P(B) = P(B|A)P(A)$, we can describe Bayes' Rule:</p>
 <p>
-$$P(A|B) = \frac{P(A,B)}{P(B)}$$
+$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$
 </p>
+<p>For 3 events $A,B,C$, we can write $$P(A|B,C)  = \frac{P(A,B,C)}{P(B,C)} = \frac{P(B,C|A)P(A)}{P(B,C)}$$</p>
+<p>We can also use the chain rule to our liking:</p>
+<p>
+$$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P(A|B,C)$$
+</p>
+<p>Note that it may be useful to commute these terms depending on the circumstance.</p>
 
 </div>
 </div>
@@ -613,6 +619,8 @@ $$P(A|B) = \frac{P(A,B)}{P(B)}$$
 <h1 id="Random-Variables-and-their-Distributions">
 <a class="anchor" href="#Random-Variables-and-their-Distributions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random Variables and their Distributions<a class="anchor-link" href="#Random-Variables-and-their-Distributions"> </a>
 </h1>
+<p>A random variable can take on a number of values according to a mathematical function. This may be thought of as the probability of a given outcome of an experiment in a global sense.</p>
+
 </div>
 </div>
 </div>

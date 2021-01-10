@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Everything but the Model | Simon Says</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Everything but the Model" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An outline of data loading, feature extraction, feature selection, model evaluation, and model evaluation." />
+<meta property="og:description" content="An outline of data loading, feature extraction, feature selection, model evaluation, and model evaluation." />
+<link rel="canonical" href="https://simonlevine.github.io/simonsays/jupyter/2021/01/09/all-but-the-model.html" />
+<meta property="og:url" content="https://simonlevine.github.io/simonsays/jupyter/2021/01/09/all-but-the-model.html" />
+<meta property="og:site_name" content="Simon Says" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-09T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://simonlevine.github.io/simonsays/jupyter/2021/01/09/all-but-the-model.html","@type":"BlogPosting","headline":"Everything but the Model","dateModified":"2021-01-09T00:00:00-06:00","datePublished":"2021-01-09T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlevine.github.io/simonsays/jupyter/2021/01/09/all-but-the-model.html"},"description":"An outline of data loading, feature extraction, feature selection, model evaluation, and model evaluation.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/simonsays/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://simonlevine.github.io/simonsays/feed.xml" title="Simon Says" /><link rel="shortcut icon" type="image/x-icon" href="/simonsays/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/simonsays/">Simon Says</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/simonsays/about/">About Me</a><a class="page-link" href="/simonsays/search/">Search</a><a class="page-link" href="/simonsays/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Everything but the Model</h1><p class="page-description">An outline of data loading, feature extraction, feature selection, model evaluation, and model evaluation.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-09T00:00:00-06:00" itemprop="datePublished">
+        Jan 9, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      15 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/simonsays/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/simonlevine/simonsays/tree/master/_notebooks/2021-01-09-all-but-the-model.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/simonsays/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/simonlevine/simonsays/master?filepath=_notebooks%2F2021-01-09-all-but-the-model.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/simonsays/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/simonlevine/simonsays/blob/master/_notebooks/2021-01-09-all-but-the-model.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/simonsays/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Background">Background </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Example-Dataset">Example Dataset </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Wrangling">Wrangling </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Dealing-with-NaN-(Missing-Values)">Dealing with NaN (Missing Values) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Dealing-with-Categorial-Features">Dealing with Categorial Features </a></li>
+<li class="toc-entry toc-h1"><a href="#Feature-Rescaling">Feature Rescaling </a></li>
+<li class="toc-entry toc-h1"><a href="#Feature-Extraction">Feature Extraction </a></li>
+<li class="toc-entry toc-h1"><a href="#-">  </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-01-09-all-but-the-model.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Background">
+<a class="anchor" href="#Background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background<a class="anchor-link" href="#Background"> </a>
+</h1>
+<p>Most of the attention with regard to machine learning goes to the models, with good reason. We are at the point where we can reasonably model any $X\to y$ relationship we wish. Difficult classification and clustering problems are increasingly tractable with clever approaches in statistical and rules-based learning. Even if we have no clue how to begin to go about developing such an approach (or such an approach would be intractable / biased), we can train deep neural networks – Universal Approximators – to theoretically represent almost any $f(x)= y = Wx + b$ relationship given properly trained weights $W$.</p>
+<p>Still, humans are likely to be of use for the foreseeable future, and one of the more useful domains is the preparation of dat for such modeling. This includes topics such as feature selection and feature extraction, and how we might select the best model based on a rigorous, generalizable evaluation metric.</p>
+<p>In this post, I will outline some of these useful topics with the hope that you will be able to tackle most everything about machine learning but the machine itself.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example-Dataset">
+<a class="anchor" href="#Example-Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Dataset<a class="anchor-link" href="#Example-Dataset"> </a>
+</h2>
+<p>I will use the COVID-19 Cell Atlas' nasal immunodefiency swab dataset (<a href="https://www.sanger.ac.uk/group/vento-tormo-group/">https://www.sanger.ac.uk/group/vento-tormo-group/</a>) for examples to follow. This is a recent dataset of real patients. I will use the <code>scanpy</code> package to load in the data and take a <code>pandas</code> dataframe for examples for feed into <code>scikit-learn</code>.</p>
+<p>For the response variable, I will use <code>Vasoactive agents required during hospitalization</code>, a proxy for severity of symptoms and infection.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">scanpy</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">scanpy</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s1">'../data/2021-01-09/Immunodeficiency_Nasal_swabs.h5ad'</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'Vasoactive agents required during hospitalization'</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Vasoactive agents required during hospitalization'</span><span class="p">])</span>
+
+<span class="n">dataset</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CellType</th>
+      <th>log2p1_RNAcount</th>
+      <th>nFeature_RNA</th>
+      <th>MT_fraction</th>
+      <th>Viral Molecules</th>
+      <th>Lab number</th>
+      <th>Donor Id</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Race</th>
+      <th>...</th>
+      <th>Pre-existing Hypertension</th>
+      <th>Pre-existing immunocompromised condition</th>
+      <th>Smoking</th>
+      <th>SARS-CoV-2 PCR</th>
+      <th>SARS-CoV-2 Ab</th>
+      <th>Symptomatic</th>
+      <th>Admitted to hospital</th>
+      <th>Highest level of respiratory support</th>
+      <th>Vasoactive agents required during hospitalization</th>
+      <th>28-day death</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>Secretary epithelium</td>
+      <td>14.909096</td>
+      <td>5687</td>
+      <td>0.042059</td>
+      <td>0</td>
+      <td>CV19-1-S3.2A</td>
+      <td>GWAS_1</td>
+      <td>18</td>
+      <td>F</td>
+      <td>White</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Never or unknown</td>
+      <td>Positive</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>Secretary epithelium KRT5</td>
+      <td>13.611947</td>
+      <td>3967</td>
+      <td>0.097771</td>
+      <td>0</td>
+      <td>CV19-1-S3.2A</td>
+      <td>GWAS_1</td>
+      <td>18</td>
+      <td>F</td>
+      <td>White</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Never or unknown</td>
+      <td>Positive</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>Ciliated epithelium</td>
+      <td>9.366322</td>
+      <td>513</td>
+      <td>0.036419</td>
+      <td>0</td>
+      <td>CV19-1-S3.2A</td>
+      <td>GWAS_1</td>
+      <td>18</td>
+      <td>F</td>
+      <td>White</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Never or unknown</td>
+      <td>Positive</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGAGAATCTCC-1</th>
+      <td>Secretary epithelium</td>
+      <td>15.217731</td>
+      <td>6260</td>
+      <td>0.053720</td>
+      <td>0</td>
+      <td>CV19-1-S3.2A</td>
+      <td>GWAS_1</td>
+      <td>18</td>
+      <td>F</td>
+      <td>White</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Never or unknown</td>
+      <td>Positive</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGCATCCTTGC-1</th>
+      <td>Ciliated epithelium</td>
+      <td>9.134426</td>
+      <td>439</td>
+      <td>0.016043</td>
+      <td>0</td>
+      <td>CV19-1-S3.2A</td>
+      <td>GWAS_1</td>
+      <td>18</td>
+      <td>F</td>
+      <td>White</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Never or unknown</td>
+      <td>Positive</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 26 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Index(['CellType', 'log2p1_RNAcount', 'nFeature_RNA', 'MT_fraction',
+       'Viral Molecules', 'Lab number', 'Donor Id', 'Age', 'Sex', 'Race',
+       'Ethnicity', 'BMI', 'Pre-existing heart disease',
+       'Pre-existing lung disease', 'Pre-existing kidney disease',
+       'Pre-existing diabetes', 'Pre-existing Hypertension',
+       'Pre-existing immunocompromised condition', 'Smoking', 'SARS-CoV-2 PCR',
+       'Symptomatic', 'Admitted to hospital',
+       'Highest level of respiratory support', '28-day death'],
+      dtype='object')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a good toy dataset. We have a mixture of categorical, continuous-valued, integer-valued, string-valued, and others, as well as a clean binary <code>Yes</code> or <code>No</code> response variable.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Wrangling">
+<a class="anchor" href="#Wrangling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wrangling<a class="anchor-link" href="#Wrangling"> </a>
+</h1>
+<p>A few short operations will make life easier later on.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Dealing-with-NaN-(Missing-Values)">
+<a class="anchor" href="#Dealing-with-NaN-(Missing-Values)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dealing with NaN (Missing Values)<a class="anchor-link" href="#Dealing-with-NaN-(Missing-Values)"> </a>
+</h2>
+<p>You can see in the <code>SARS-CoV-2 Ab</code> column that we have NaN values. Although classifier implementations may have built-in accommodations, it may best best to deal with these values in a way we can fully control.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">'SARS-CoV-2 Ab'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>GW1_AAACGGGAGCTAGTCT-1     NaN
+GW1_AAAGTAGTCCTAGGGC-1     NaN
+GW1_AACACGTCAGCGTCCA-1     NaN
+GW1_AACCATGAGAATCTCC-1     NaN
+GW1_AACCATGCATCCTTGC-1     NaN
+                          ... 
+GW13_TTTCCTCCAAGCCTAT-1    NaN
+GW13_TTTCCTCCAAGTCTGT-1    NaN
+GW13_TTTGTCAAGCCCAATT-1    NaN
+GW13_TTTGTCAGTAGGACAC-1    NaN
+GW13_TTTGTCATCGTGTAGT-1    NaN
+Name: SARS-CoV-2 Ab, Length: 4936, dtype: category
+Categories (3, object): ['Not done' &lt; 'Negative' &lt; 'Positive']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, though I suspect this is just an indicator variable to show whether or not the patient recieved an antibody test, we can look at unique values to be sure.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="p">[</span><span class="s1">'SARS-CoV-2 Ab'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[NaN]
+Categories (0, object): []</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this case, let's just drop the column. It is likely uninformative with regard to the reponse variable <code>y = Vasoactive agents required during hospitalization</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'SARS-CoV-2 Ab'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(4936, 24)
+(4936, 26)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As expected.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Dealing-with-Categorial-Features">
+<a class="anchor" href="#Dealing-with-Categorial-Features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dealing with Categorial Features<a class="anchor-link" href="#Dealing-with-Categorial-Features"> </a>
+</h1>
+<p>We will need to encode nominal and/or ordinal features to a one-hot representation. We can easily exclude numerical-valued columns from this process. We should also binarize the $y$ labels.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numer_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">numerical_cols</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'numerical columns:</span><span class="se">\n</span><span class="si">{</span><span class="n">numer_cols</span><span class="si">}</span><span class="se">\n\n</span><span class="s1">categorical columns:</span><span class="se">\n</span><span class="s1"> </span><span class="si">{</span><span class="n">cat_cols</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>numerical columns:
+['log2p1_RNAcount', 'nFeature_RNA', 'MT_fraction', 'Viral Molecules']
+
+categorical columns:
+ ['Race', 'BMI', 'Pre-existing immunocompromised condition', 'Pre-existing Hypertension', 'Donor Id', 'Pre-existing lung disease', 'Pre-existing diabetes', 'Age', '28-day death', 'Admitted to hospital', 'Lab number', 'Smoking', 'Ethnicity', 'Symptomatic', 'Pre-existing kidney disease', 'Sex', 'Highest level of respiratory support', 'SARS-CoV-2 PCR', 'CellType', 'Pre-existing heart disease']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Race</th>
+      <th>BMI</th>
+      <th>Pre-existing immunocompromised condition</th>
+      <th>Pre-existing Hypertension</th>
+      <th>Donor Id</th>
+      <th>Pre-existing lung disease</th>
+      <th>Pre-existing diabetes</th>
+      <th>Age</th>
+      <th>28-day death</th>
+      <th>Admitted to hospital</th>
+      <th>Lab number</th>
+      <th>Smoking</th>
+      <th>Ethnicity</th>
+      <th>Symptomatic</th>
+      <th>Pre-existing kidney disease</th>
+      <th>Sex</th>
+      <th>Highest level of respiratory support</th>
+      <th>SARS-CoV-2 PCR</th>
+      <th>CellType</th>
+      <th>Pre-existing heart disease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium KRT5</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Ciliated epithelium</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With the exception of BMI, this looks fine. Since we have a BMI range, we should use an ordinal encoder in this case. The rest are simply categorical.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ord_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'BMI'</span><span class="p">]</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cat_cols</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ord_cols</span><span class="p">]</span>
+<span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Race</th>
+      <th>Pre-existing immunocompromised condition</th>
+      <th>Pre-existing Hypertension</th>
+      <th>Donor Id</th>
+      <th>Pre-existing lung disease</th>
+      <th>Pre-existing diabetes</th>
+      <th>Age</th>
+      <th>28-day death</th>
+      <th>Admitted to hospital</th>
+      <th>Lab number</th>
+      <th>Smoking</th>
+      <th>Ethnicity</th>
+      <th>Symptomatic</th>
+      <th>Pre-existing kidney disease</th>
+      <th>Sex</th>
+      <th>Highest level of respiratory support</th>
+      <th>SARS-CoV-2 PCR</th>
+      <th>CellType</th>
+      <th>Pre-existing heart disease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium KRT5</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Ciliated epithelium</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can encode these properly using <code>scikit-learn</code> or a builtin <code>pandas</code> method (we will use the latter and comment out the former). While we could use an ordinal encoder, whereby one clas is mapped to an integer, we should actually use one-hot encoding as this is a continuous input, valid for <code>scikit-learn</code> estimators. Note that a NaN is treated as a distinct category. It's a good thing we dropped that NaN column!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Race_White</th>
+      <th>Race_Black</th>
+      <th>Race_Asian</th>
+      <th>Race_Other</th>
+      <th>Pre-existing immunocompromised condition_No</th>
+      <th>Pre-existing immunocompromised condition_Yes</th>
+      <th>Pre-existing Hypertension_No</th>
+      <th>Pre-existing Hypertension_Yes</th>
+      <th>Donor Id_GWAS_1</th>
+      <th>Donor Id_GWAS_10</th>
+      <th>...</th>
+      <th>CellType_Secretary epithelium KRT5</th>
+      <th>CellType_Squamous epithelium 1</th>
+      <th>CellType_Squamous epithelium 2</th>
+      <th>CellType_Ciliated epithelium</th>
+      <th>CellType_Neutrophil</th>
+      <th>CellType_Erythrocytes</th>
+      <th>CellType_Low quality</th>
+      <th>CellType_filtered cells and doublets</th>
+      <th>Pre-existing heart disease_No</th>
+      <th>Pre-existing heart disease_Yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGAGAATCTCC-1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGCATCCTTGC-1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 77 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+
+<span class="n">transformed_data</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">])</span>
+
+<span class="n">encoded_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">transformed_data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="c1"># now concatenate the original data and the encoded data</span>
+<span class="n">concatenated_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">],</span> <span class="n">encoded_data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">concatenated_data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Race</th>
+      <th>Pre-existing immunocompromised condition</th>
+      <th>Pre-existing Hypertension</th>
+      <th>Donor Id</th>
+      <th>Pre-existing lung disease</th>
+      <th>Pre-existing diabetes</th>
+      <th>Age</th>
+      <th>28-day death</th>
+      <th>Admitted to hospital</th>
+      <th>Lab number</th>
+      <th>Smoking</th>
+      <th>Ethnicity</th>
+      <th>Symptomatic</th>
+      <th>Pre-existing kidney disease</th>
+      <th>Sex</th>
+      <th>Highest level of respiratory support</th>
+      <th>SARS-CoV-2 PCR</th>
+      <th>CellType</th>
+      <th>Pre-existing heart disease</th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium KRT5</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Ciliated epithelium</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGAGAATCTCC-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGCATCCTTGC-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Ciliated epithelium</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTCCTCCAAGCCTAT-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Tcells CD8</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTCCTCCAAGTCTGT-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Tcells CD8</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCAAGCCCAATT-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCAGTAGGACAC-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Squamous epithelium 1</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCATCGTGTAGT-1</th>
+      <td>White</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Squamous epithelium 1</td>
+      <td>No</td>
+      <td>(0, 1)\t1.0\n  (0, 2)\t1.0\n  (0, 3)\t1.0\n ...</td>
+    </tr>
+  </tbody>
+</table>
+<p>4936 rows × 20 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> 
+<span class="n">X</span><span class="p">[</span><span class="n">cat_cols</span><span class="p">]</span><span class="o">.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>log2p1_RNAcount</th>
+      <th>nFeature_RNA</th>
+      <th>MT_fraction</th>
+      <th>Viral Molecules</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>14.909096</td>
+      <td>5687</td>
+      <td>0.042059</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>13.611947</td>
+      <td>3967</td>
+      <td>0.097771</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>9.366322</td>
+      <td>513</td>
+      <td>0.036419</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGAGAATCTCC-1</th>
+      <td>15.217731</td>
+      <td>6260</td>
+      <td>0.053720</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGCATCCTTGC-1</th>
+      <td>9.134426</td>
+      <td>439</td>
+      <td>0.016043</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTCCTCCAAGCCTAT-1</th>
+      <td>10.832890</td>
+      <td>870</td>
+      <td>0.017005</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTCCTCCAAGTCTGT-1</th>
+      <td>11.065416</td>
+      <td>1001</td>
+      <td>0.015406</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCAAGCCCAATT-1</th>
+      <td>13.670767</td>
+      <td>3477</td>
+      <td>0.032975</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCAGTAGGACAC-1</th>
+      <td>9.147205</td>
+      <td>313</td>
+      <td>0.044170</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCATCGTGTAGT-1</th>
+      <td>9.623881</td>
+      <td>537</td>
+      <td>0.029188</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>4936 rows × 4 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>GW1_AAACGGGAGCTAGTCT-1    Yes
+GW1_AAAGTAGTCCTAGGGC-1    Yes
+GW1_AACACGTCAGCGTCCA-1    Yes
+GW1_AACCATGAGAATCTCC-1    Yes
+GW1_AACCATGCATCCTTGC-1    Yes
+Name: Vasoactive agents required during hospitalization, dtype: category
+Categories (2, object): ['No' &lt; 'Yes']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">numerical_cols</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Race</th>
+      <th>BMI</th>
+      <th>Pre-existing immunocompromised condition</th>
+      <th>Pre-existing Hypertension</th>
+      <th>Donor Id</th>
+      <th>Pre-existing lung disease</th>
+      <th>Pre-existing diabetes</th>
+      <th>Age</th>
+      <th>28-day death</th>
+      <th>Admitted to hospital</th>
+      <th>Lab number</th>
+      <th>Smoking</th>
+      <th>Ethnicity</th>
+      <th>Symptomatic</th>
+      <th>Pre-existing kidney disease</th>
+      <th>Sex</th>
+      <th>Highest level of respiratory support</th>
+      <th>SARS-CoV-2 PCR</th>
+      <th>CellType</th>
+      <th>Pre-existing heart disease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium KRT5</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Ciliated epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGAGAATCTCC-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGCATCCTTGC-1</th>
+      <td>White</td>
+      <td>30.0-39.9 (obese)</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_1</td>
+      <td>No</td>
+      <td>No</td>
+      <td>18</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-1-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Not Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Ciliated epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTCCTCCAAGCCTAT-1</th>
+      <td>White</td>
+      <td>Unknown</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Tcells CD8</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTCCTCCAAGTCTGT-1</th>
+      <td>White</td>
+      <td>Unknown</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Tcells CD8</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCAAGCCCAATT-1</th>
+      <td>White</td>
+      <td>Unknown</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Secretary epithelium</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCAGTAGGACAC-1</th>
+      <td>White</td>
+      <td>Unknown</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Squamous epithelium 1</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>GW13_TTTGTCATCGTGTAGT-1</th>
+      <td>White</td>
+      <td>Unknown</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>GWAS_11</td>
+      <td>No</td>
+      <td>No</td>
+      <td>50</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>CV19-11-S3.2A</td>
+      <td>Never or unknown</td>
+      <td>Hispanic or Latino</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>F</td>
+      <td>Mechanical ventilation with intubation</td>
+      <td>Positive</td>
+      <td>Squamous epithelium 1</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+<p>4936 rows × 20 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Feature-Rescaling">
+<a class="anchor" href="#Feature-Rescaling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Rescaling<a class="anchor-link" href="#Feature-Rescaling"> </a>
+</h1>
+<p>It may be prudent to rescale features, especially if each feature is not on the same given scale. This may be done to remove the bias of certain features given downstream tasks. For instance, take the following features from our $X$: <code>log2p1_RNAcount</code> and <code>nFeature_RNA</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="p">[[</span><span class="s1">'log2p1_RNAcount'</span><span class="p">,</span> <span class="s1">'nFeature_RNA'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>log2p1_RNAcount</th>
+      <th>nFeature_RNA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GW1_AAACGGGAGCTAGTCT-1</th>
+      <td>14.909096</td>
+      <td>5687</td>
+    </tr>
+    <tr>
+      <th>GW1_AAAGTAGTCCTAGGGC-1</th>
+      <td>13.611947</td>
+      <td>3967</td>
+    </tr>
+    <tr>
+      <th>GW1_AACACGTCAGCGTCCA-1</th>
+      <td>9.366322</td>
+      <td>513</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGAGAATCTCC-1</th>
+      <td>15.217731</td>
+      <td>6260</td>
+    </tr>
+    <tr>
+      <th>GW1_AACCATGCATCCTTGC-1</th>
+      <td>9.134426</td>
+      <td>439</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In an extraction process (such as PCA, making use of covariance), or when using a classifier making use of Euclidean distance, the feature with the largest numerical range will be naturally more weighted.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">'log2p1_RNAcount'</span><span class="p">]</span>
+<span class="n">x_2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">'nFeature_RNA'</span><span class="p">]</span>
+
+<span class="n">range_1</span> <span class="o">=</span> <span class="n">x_1</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">x_1</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">range_2</span> <span class="o">=</span> <span class="n">x_2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">x_2</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">range_1</span><span class="p">,</span> <span class="n">range_2</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>12.476429788752128
+9651
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>nFeature_RNA</code> therefore has a much more significant bearing on an outcome contingent upon this range.</p>
+<p>We therefore rescale in a few ways:</p>
+<ul>
+<li>1) with min/max rescaling<ul>
+<li>$x_i' = \frac{x_i - min(x)}{max(x) - min(x)}$</li>
+<li>simple, preserves mean of dataset. Useful for image pixel intensity, for instance.</li>
+</ul>
+</li>
+<li>
+<p>2) with $z$-score normalization</p>
+<ul>
+<li>$x_i' = \frac{x_i - \bar{x}}{\sigma}$ = $\text{number of standard deviations from the mean}$ = $z\text{-score}$</li>
+<li>standardizes features, typically with $\mu = 0,\sigma^2 = 1$. This is a better choice than min/max for things like PCA since in that case we want to select components maximizing variance of the feature matrix, without getting caught up by the scale of that variance.</li>
+</ul>
+</li>
+<li>
+<p>3) with median and interquartile range rescaling (robust rescaling).</p>
+<ul>
+<li>Remove the median value and scale according to interquartile range.</li>
+<li>better choice if there are significant outliers.</li>
+</ul>
+</li>
+</ul>
+<p>Let's go with 3) somewhat arbitrarily but also in the case of outliers.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+
+<span class="n">robust_scaler</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">RobustScaler</span><span class="p">()</span>
+<span class="n">robust_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-62-da54db209324&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> 
+<span class="ansi-green-intense-fg ansi-bold">      3</span> robust_scaler <span class="ansi-blue-fg">=</span> preprocessing<span class="ansi-blue-fg">.</span>RobustScaler<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span>robust_scaler<span class="ansi-blue-fg">.</span>fit_transform<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/sklearn/base.py</span> in <span class="ansi-cyan-fg">fit_transform</span><span class="ansi-blue-fg">(self, X, y, **fit_params)</span>
+<span class="ansi-green-intense-fg ansi-bold">    688</span>         <span class="ansi-green-fg">if</span> y <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    689</span>             <span class="ansi-red-fg"># fit method of arity 1 (unsupervised transformation)</span>
+<span class="ansi-green-fg">--&gt; 690</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>fit<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>fit_params<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>transform<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    691</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    692</span>             <span class="ansi-red-fg"># fit method of arity 2 (supervised transformation)</span>
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/sklearn/preprocessing/_data.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-fg">(self, X, y)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1198</span>         <span class="ansi-red-fg"># at fit, convert sparse matrices to csc for optimized computation of</span>
+<span class="ansi-green-intense-fg ansi-bold">   1199</span>         <span class="ansi-red-fg"># the quantiles</span>
+<span class="ansi-green-fg">-&gt; 1200</span><span class="ansi-red-fg">         X = self._validate_data(X, accept_sparse='csc', estimator=self,
+</span><span class="ansi-green-intense-fg ansi-bold">   1201</span>                                 dtype<span class="ansi-blue-fg">=</span>FLOAT_DTYPES<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1202</span>                                 force_all_finite='allow-nan')
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/sklearn/base.py</span> in <span class="ansi-cyan-fg">_validate_data</span><span class="ansi-blue-fg">(self, X, y, reset, validate_separately, **check_params)</span>
+<span class="ansi-green-intense-fg ansi-bold">    418</span>                     <span class="ansi-blue-fg">f"requires y to be passed, but the target y is None."</span>
+<span class="ansi-green-intense-fg ansi-bold">    419</span>                 )
+<span class="ansi-green-fg">--&gt; 420</span><span class="ansi-red-fg">             </span>X <span class="ansi-blue-fg">=</span> check_array<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>check_params<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    421</span>             out <span class="ansi-blue-fg">=</span> X
+<span class="ansi-green-intense-fg ansi-bold">    422</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/sklearn/utils/validation.py</span> in <span class="ansi-cyan-fg">inner_f</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     71</span>                           FutureWarning)
+<span class="ansi-green-intense-fg ansi-bold">     72</span>         kwargs<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span> arg <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span> arg <span class="ansi-green-fg">in</span> zip<span class="ansi-blue-fg">(</span>sig<span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">,</span> args<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 73</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     74</span>     <span class="ansi-green-fg">return</span> inner_f
+<span class="ansi-green-intense-fg ansi-bold">     75</span> 
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/sklearn/utils/validation.py</span> in <span class="ansi-cyan-fg">check_array</span><span class="ansi-blue-fg">(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator)</span>
+<span class="ansi-green-intense-fg ansi-bold">    597</span>                     array <span class="ansi-blue-fg">=</span> array<span class="ansi-blue-fg">.</span>astype<span class="ansi-blue-fg">(</span>dtype<span class="ansi-blue-fg">,</span> casting<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">"unsafe"</span><span class="ansi-blue-fg">,</span> copy<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    598</span>                 <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 599</span><span class="ansi-red-fg">                     </span>array <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>asarray<span class="ansi-blue-fg">(</span>array<span class="ansi-blue-fg">,</span> order<span class="ansi-blue-fg">=</span>order<span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">=</span>dtype<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    600</span>             <span class="ansi-green-fg">except</span> ComplexWarning<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    601</span>                 raise ValueError("Complex data not supported\n"
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/numpy/core/_asarray.py</span> in <span class="ansi-cyan-fg">asarray</span><span class="ansi-blue-fg">(a, dtype, order)</span>
+<span class="ansi-green-intense-fg ansi-bold">     83</span> 
+<span class="ansi-green-intense-fg ansi-bold">     84</span>     """
+<span class="ansi-green-fg">---&gt; 85</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> array<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">,</span> copy<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> order<span class="ansi-blue-fg">=</span>order<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     86</span> 
+<span class="ansi-green-intense-fg ansi-bold">     87</span> 
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/pandas/core/generic.py</span> in <span class="ansi-cyan-fg">__array__</span><span class="ansi-blue-fg">(self, dtype)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1776</span> 
+<span class="ansi-green-intense-fg ansi-bold">   1777</span>     <span class="ansi-green-fg">def</span> __array__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> np<span class="ansi-blue-fg">.</span>ndarray<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1778</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> np<span class="ansi-blue-fg">.</span>asarray<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_values<span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">=</span>dtype<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1779</span> 
+<span class="ansi-green-intense-fg ansi-bold">   1780</span>     <span class="ansi-green-fg">def</span> __array_wrap__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> result<span class="ansi-blue-fg">,</span> context<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/opt/anaconda3/envs/pt_xmlc_transformer/lib/python3.8/site-packages/numpy/core/_asarray.py</span> in <span class="ansi-cyan-fg">asarray</span><span class="ansi-blue-fg">(a, dtype, order)</span>
+<span class="ansi-green-intense-fg ansi-bold">     83</span> 
+<span class="ansi-green-intense-fg ansi-bold">     84</span>     """
+<span class="ansi-green-fg">---&gt; 85</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> array<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">,</span> copy<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> order<span class="ansi-blue-fg">=</span>order<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     86</span> 
+<span class="ansi-green-intense-fg ansi-bold">     87</span> 
+
+<span class="ansi-red-fg">ValueError</span>: could not convert string to float: 'Secretary epithelium'</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Feature-Extraction">
+<a class="anchor" href="#Feature-Extraction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Extraction<a class="anchor-link" href="#Feature-Extraction"> </a>
+</h1>
+<p>Feature extraction is the process of reducing dimensionality to find latent features in a given feature set. This can be done in a variety of ways for a variety of use cases. As for why, let's say we have a dataset with a massive number of features, such that training a network to make use of all the features somewhat equally. That is, let</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="-">
+<a class="anchor" href="#-" aria-hidden="true"><span class="octicon octicon-link"></span></a> <a class="anchor-link" href="#-"> </a>
+</h1>
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="simonlevine/simonsays"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/simonsays/jupyter/2021/01/09/all-but-the-model.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/simonsays/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/simonsays/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/simonsays/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tutorials and Musings.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/simonlevine" title="simonlevine"><svg class="svg-icon grey"><use xlink:href="/simonsays/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
