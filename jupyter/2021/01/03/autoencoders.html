@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="and how Variational Autoencoders (VAEs) perform expectation maximization (EM)." />
 <meta property="og:description" content="and how Variational Autoencoders (VAEs) perform expectation maximization (EM)." />
-<link rel="canonical" href="https://simonlevine.github.io/simonsays/jupyter/2020/12/31/autoencoders.html" />
-<meta property="og:url" content="https://simonlevine.github.io/simonsays/jupyter/2020/12/31/autoencoders.html" />
+<link rel="canonical" href="https://simonlevine.github.io/simonsays/jupyter/2021/01/03/autoencoders.html" />
+<meta property="og:url" content="https://simonlevine.github.io/simonsays/jupyter/2021/01/03/autoencoders.html" />
 <meta property="og:site_name" content="Simon Says" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-12-31T00:00:00-06:00" />
+<meta property="article:published_time" content="2021-01-03T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://simonlevine.github.io/simonsays/jupyter/2020/12/31/autoencoders.html","@type":"BlogPosting","headline":"(simple) Autoencoders ≡ PCA","dateModified":"2020-12-31T00:00:00-06:00","datePublished":"2020-12-31T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlevine.github.io/simonsays/jupyter/2020/12/31/autoencoders.html"},"description":"and how Variational Autoencoders (VAEs) perform expectation maximization (EM).","@context":"https://schema.org"}</script>
+{"url":"https://simonlevine.github.io/simonsays/jupyter/2021/01/03/autoencoders.html","@type":"BlogPosting","headline":"(simple) Autoencoders ≡ PCA","dateModified":"2021-01-03T00:00:00-06:00","datePublished":"2021-01-03T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlevine.github.io/simonsays/jupyter/2021/01/03/autoencoders.html"},"description":"and how Variational Autoencoders (VAEs) perform expectation maximization (EM).","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/simonsays/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://simonlevine.github.io/simonsays/feed.xml" title="Simon Says" /><link rel="shortcut icon" type="image/x-icon" href="/simonsays/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,8 +87,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">(simple) Autoencoders ≡ PCA</h1><p class="page-description">and how Variational Autoencoders (VAEs) perform expectation maximization (EM).</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-31T00:00:00-06:00" itemprop="datePublished">
-        Dec 31, 2020
+    <h1 class="post-title p-name" itemprop="name headline">(simple) Autoencoders ≡ PCA</h1><p class="page-description">and how Variational Autoencoders (VAEs) perform expectation maximization (EM).</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-03T00:00:00-06:00" itemprop="datePublished">
+        Jan 3, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -111,19 +111,19 @@ window.onload = wrap_img;
         <div class="pb-5 d-flex flex-wrap flex-justify-end">
           <div class="px-2">
 
-    <a href="https://github.com/simonlevine/simonsays/tree/master/_notebooks/2020-12-31-autoencoders.ipynb" role="button" target="_blank">
+    <a href="https://github.com/simonlevine/simonsays/tree/master/_notebooks/2021-01-03-autoencoders.ipynb" role="button" target="_blank">
 <img class="notebook-badge-image" src="/simonsays/assets/badges/github.svg" alt="View On GitHub">
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://mybinder.org/v2/gh/simonlevine/simonsays/master?filepath=_notebooks%2F2020-12-31-autoencoders.ipynb" target="_blank">
+    <a href="https://mybinder.org/v2/gh/simonlevine/simonsays/master?filepath=_notebooks%2F2021-01-03-autoencoders.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/simonsays/assets/badges/binder.svg" alt="Open In Binder"/>
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://colab.research.google.com/github/simonlevine/simonsays/blob/master/_notebooks/2020-12-31-autoencoders.ipynb" target="_blank">
+    <a href="https://colab.research.google.com/github/simonlevine/simonsays/blob/master/_notebooks/2021-01-03-autoencoders.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/simonsays/assets/badges/colab.svg" alt="Open In Colab"/>
     </a>
 </div>
@@ -138,7 +138,7 @@ window.onload = wrap_img;
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/2020-12-31-autoencoders.ipynb
+# file to edit: _notebooks/2021-01-03-autoencoders.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -171,7 +171,7 @@ $$\hat{x} = w^Twx;\ div(\hat{x},x) = \|x-\hat{x}\|^2 = \|x - w^TWx\|^2 $$
 $$\to via\ backprop \to \hat{w} = \arg\min_w E\left[ \| x-w^TWx\|^2 \right]$$
 </p>
 <p>This is equivalent to discovering a basis that spans the principle components of the input, as we discover the directions of maximum energy, equal to the variance of $X$ if $X$ is a zero-mean random variable. In other words, we find a linear mapping of the original features to the principle axis of the data.</p>
-<p>Finally, if the learned decoder weight is <em>not</em> the same weight as the input weight (i.e., $U^T \not = W^T$),  we still learn a hidden representation $z$ that lies along the major axis of the input $X$. The minimum error direction here is by definition the principle eigen vector of $X$.</p>
+<p>Finally, if the learned decoder weight is <em>not</em> the same weight as the input weight (i.e., $U^T \not = W^T$),  we still learn a hidden representation $z$ that lies along the major axis of the input $X$. The minimum error direction here is by definition the pinciple eigen vector of $X$.</p>
 <p>We could then find a useful component of $X$ (described perhaps by our training process or assumptions)by then projecting the eigen vector onto $X$. Again, if $U^T = W^T$, we arrive at the principle component(s) of $X$.</p>
 <p>Of course, this is a roundabout method of obtaining principle components, but I hope it shows the rigorous grounding and versatility of perceptrons in learning representations of data.</p>
 
@@ -190,7 +190,7 @@ $$\to via\ backprop \to \hat{w} = \arg\min_w E\left[ \| x-w^TWx\|^2 \right]$$
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/simonsays/jupyter/2020/12/31/autoencoders.html" hidden></a>
+</script><a class="u-url" href="/simonsays/jupyter/2021/01/03/autoencoders.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
