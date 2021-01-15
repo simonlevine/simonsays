@@ -2088,8 +2088,8 @@ Epoch 24: 100%|██████████| 78/78 [00:00&lt;00:00, 236.67it/s
 <a class="anchor" href="#Feature-Selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Selection<a class="anchor-link" href="#Feature-Selection"> </a>
 </h1>
 <p>Phew! Feature extraction, unsupervised learning, and data representation is its own discipline. We could spend days on that topic, and there are exciting developments along those lines – think state of the art language models and graphical embeddings. A future project I have in mind is actually strictly feature extraction, whereby a deep health embedding across time-series health data could improve clinical decisionmaking.</p>
-<p>One critical aspect of the extraction process is that you do lose interpretability. In addition, you may not only lose linearity between $X\toX_{embdedded}$ but also determinism. Some of these methods are effective, but indeed stochastic. This is of course on top of the "black box" problem of learning systems in general (just try inspecting even the simple autoencoder to parse its choices in reconstruction).</p>
-<p>This is all to say that <em>selection</em> of existing features is a valuable skill to have. If we <em>choose</em> features as humans have provided them, rather than</p>
+<p>One critical aspect of the extraction process is that you do lose interpretability. In addition, you may not only lose linearity between $X\to X_{embdedded}$ but also determinism. Some of these methods are effective, but indeed stochastic. This is of course on top of the "black box" problem of learning systems in general (just try inspecting even the simple autoencoder to parse its choices in reconstruction).</p>
+<p>This is all to say that <em>selection</em> of existing features is a valuable skill to have. We can <em>choose</em> features as humans have provided them, rather than extracting features, and have stronger explainability. We can also use feature extraction / dimensionality reduction after this step.</p>
 
 </div>
 </div>
