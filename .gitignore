@@ -16,3 +16,9 @@ __pycache__
 2020-02-20-test.ipynb
 data/2021-01-09/Immunodeficiency_Nasal_swabs.h5ad
 _notebooks/data/pbmc3k_processed.h5ad
+*.h5ad
+*.pt
+_notebooks/data/MNIST/raw/t10k-labels-idx1-ubyte
+*.gz
+_notebooks/data/MNIST/raw/train-labels-idx1-ubyte
+_notebooks/data/MNIST/raw/train-images-idx3-ubyte
