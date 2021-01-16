@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>One GiGANtic Leap… | Simon Says</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="One GiGANtic Leap…" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Creating artifial life." />
+<meta property="og:description" content="Creating artifial life." />
+<link rel="canonical" href="https://simonlevine.github.io/simonsays/jupyter/2021/01/16/generate-me.html" />
+<meta property="og:url" content="https://simonlevine.github.io/simonsays/jupyter/2021/01/16/generate-me.html" />
+<meta property="og:site_name" content="Simon Says" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-16T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://simonlevine.github.io/simonsays/jupyter/2021/01/16/generate-me.html","@type":"BlogPosting","headline":"One GiGANtic Leap…","dateModified":"2021-01-16T00:00:00-06:00","datePublished":"2021-01-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlevine.github.io/simonsays/jupyter/2021/01/16/generate-me.html"},"description":"Creating artifial life.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/simonsays/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://simonlevine.github.io/simonsays/feed.xml" title="Simon Says" /><link rel="shortcut icon" type="image/x-icon" href="/simonsays/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/simonsays/">Simon Says</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/simonsays/about/">About Me</a><a class="page-link" href="/simonsays/search/">Search</a><a class="page-link" href="/simonsays/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">One GiGANtic Leap...</h1><p class="page-description">Creating artifial life.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-16T00:00:00-06:00" itemprop="datePublished">
+        Jan 16, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/simonsays/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/simonlevine/simonsays/tree/master/_notebooks/2021-01-16-generate-me.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/simonsays/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/simonlevine/simonsays/master?filepath=_notebooks%2F2021-01-16-generate-me.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/simonsays/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/simonlevine/simonsays/blob/master/_notebooks/2021-01-16-generate-me.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/simonsays/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Introduction">Introduction </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-01-16-generate-me.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+</h1>
+<p>Generative Adversarial Networks are more than a novel deep learning architecture. They are powerful game-theoretic constructs with potential to change much of our understanding of what is "real". If what is real is useful insofar as what we perceive is useful, then we may be in touble. The advent of GANs in the early part of this century has distrupted the way reality is made. Deep networks are becoming immensely powerful at learning class-posterior distributions $P(Y|X=x)$. However, generative models are doing something much trickier: learning $P(X,Y)$. GANs use a discriminator of $P(Y|X)$ to accomplish this. Thus, adversarial nets are a balancing act to implement and train, but provide unparalleled results. On the one hand, this could seriousy destroy media (Microsoft's MSN recently replaced human authors with generative machines), social stability, and our politics (think DeepFakes). However, there is reason to be hopeful.</p>
+<p>One realm I'm particularly excited to see GANs making an entrance is in the biosciences. GANs (and really any high-fidelity generative model) may hold the promise to generate sythetic datasets to build better supervised learners on features such as genomes, proteomes, and bioimages. This could help bring machine learning closer to solving few-shot and zero-shot problems in medicine.</p>
+<p>Another example is for the purposes of simulation and modeling. Tons of assumptions must be made during modeling (for, say, a pandemic) that may not prove realistic. On the other hand, epidemiological datasets may be limited in scope and depth, such that sparse or missing features from a data collection stage could prove vital if not for their low frequencies. Simulating patient risk pools for disease-fighting or drug design via a GAN is one potential method to overcome this, as we can sample from $P(Y,X=x_{minority})$ via a model trained to discriminate perfectly on $P(Y|X)$.</p>
+<p>Bioengineering is another intriguing space, whereby <em>in-silico</em> experimentation meets the lab bench through simulating data like yeast genomes. There's even the potential to build a <em>life factory</em> through generating realistic but novel oligomers and augmenting existing genomes (possible given how splicing is currently solved).</p>
+<p>In any event, we should know just how to 1) Train a GAN, and 2) Use it to augment an existing workflow. In this post, I will begin by using the COVID-19 cell atlas as a source of $X$ and $y$. $y$ will be some form of clinical phenotype, and $X$ will be the single-cell read counts. That is, single-cell profiling of COVID-19 patients will provide the raw data to build a generative adversarial network. We will begin by training a discriminator $f$ to learn a classification $f(X) = y$, or $P(Y|X)$. Then, the generative model will begin to simulate $X,y$ pairs, and be trained to accurately generate $P(X,Y)$. We can use this trained generative model to shore up minority classes to improve classifier performance (another $f(X) = y$, though on held-out test data), or simply to provide <em>more</em> data distributed in the same fashion as $X,y$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="simonlevine/simonsays"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/simonsays/jupyter/2021/01/16/generate-me.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/simonsays/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/simonsays/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/simonsays/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tutorials and Musings.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/simonlevine" title="simonlevine"><svg class="svg-icon grey"><use xlink:href="/simonsays/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
