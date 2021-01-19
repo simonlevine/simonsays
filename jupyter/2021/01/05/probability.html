@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      7 min read
+      8 min read
     
 </span></p>
 
@@ -168,7 +168,7 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h1"><a href="#Random-Variables-and-their-Distributions">Random Variables and their Distributions </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#Probability-Mass-Functions-(PMF)-and-Probability-Distribution-Functions-(PDF)">Probability Mass Functions (PMF) and Probability Distribution Functions (PDF) </a></li>
+<li class="toc-entry toc-h2"><a href="#Probability-Mass-Functions-(PMF)-and-Probability-Density-Functions-(PDF)">Probability Mass Functions (PMF) and Probability Density Functions (PDF) </a></li>
 <li class="toc-entry toc-h2"><a href="#Cumulative-Distribution-Functions-(CDF)">Cumulative Distribution Functions (CDF) </a></li>
 <li class="toc-entry toc-h2"><a href="#Survival-Functions">Survival Functions </a></li>
 <li class="toc-entry toc-h2"><a href="#Independence-of-Random-Variables">Independence of Random Variables </a></li>
@@ -627,9 +627,15 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Probability-Mass-Functions-(PMF)-and-Probability-Distribution-Functions-(PDF)">
-<a class="anchor" href="#Probability-Mass-Functions-(PMF)-and-Probability-Distribution-Functions-(PDF)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability Mass Functions (PMF) and Probability Distribution Functions (PDF)<a class="anchor-link" href="#Probability-Mass-Functions-(PMF)-and-Probability-Distribution-Functions-(PDF)"> </a>
+<h2 id="Probability-Mass-Functions-(PMF)-and-Probability-Density-Functions-(PDF)">
+<a class="anchor" href="#Probability-Mass-Functions-(PMF)-and-Probability-Density-Functions-(PDF)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability Mass Functions (PMF) and Probability Density Functions (PDF)<a class="anchor-link" href="#Probability-Mass-Functions-(PMF)-and-Probability-Density-Functions-(PDF)"> </a>
 </h2>
+<ul>
+<li>The Probability Mass Function is a function $f = P(X=x)$ that returns the probability associated with a <em>discrete</em> random variable $X$ taking on a particular value $x$.</li>
+<li>The Probability Density Function is a function $f = P(X=x)$ returning the probability associated with a <em>continuous</em> random variable $X$ taking on some value $x$</li>
+</ul>
+<p>Note that in either case, the probability returned is the probability of <em>precisely</em> that value. If the probability of any value up to and including $X=x$ is desired, the Cumulative Distribution Function is required, and if the probability of any value higher than $X=x$ is desired, then the survival function is the way to go.</p>
+
 </div>
 </div>
 </div>
@@ -639,6 +645,10 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h2 id="Cumulative-Distribution-Functions-(CDF)">
 <a class="anchor" href="#Cumulative-Distribution-Functions-(CDF)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cumulative Distribution Functions (CDF)<a class="anchor-link" href="#Cumulative-Distribution-Functions-(CDF)"> </a>
 </h2>
+<ul>
+<li>A function yielding $P(X\leq x)$.</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -648,6 +658,10 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h2 id="Survival-Functions">
 <a class="anchor" href="#Survival-Functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Survival Functions<a class="anchor-link" href="#Survival-Functions"> </a>
 </h2>
+<ul>
+<li>A function yielding $P(X&gt;x)$.</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -657,6 +671,10 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h2 id="Independence-of-Random-Variables">
 <a class="anchor" href="#Independence-of-Random-Variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Independence of Random Variables<a class="anchor-link" href="#Independence-of-Random-Variables"> </a>
 </h2>
+<ul>
+<li>Two variables are considered independent if knowledge of one outcome does not give information about the other. That is, $P(X=x,Y=y) = P(X=x)P(Y=y)$, where we don't need conditional independence or marginalization.</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -684,7 +702,10 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="Expected-Values">
 <a class="anchor" href="#Expected-Values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Expected Values<a class="anchor-link" href="#Expected-Values"> </a>
 </h3>
-<p>Mean, expectation, or first moment</p>
+<p>Otherwise known as mean, expectation, or first moment, the Expected Value is the weighted sum of all possible outcomes of a random variable.</p>
+<ul>
+<li>$E(X) = \sum_i x_i P(X=x_i) $</li>
+</ul>
 
 </div>
 </div>
@@ -695,6 +716,11 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="Linearity">
 <a class="anchor" href="#Linearity" aria-hidden="true"><span class="octicon octicon-link"></span></a>Linearity<a class="anchor-link" href="#Linearity"> </a>
 </h3>
+<p>Linearity implies that expected values of random variables are linear with respect to constants.</p>
+<ul>
+<li>$E(aX + bY + c) = aE(X) + bE(Y) + c$</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -704,6 +730,11 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="$\text{Distribution}-\implies-\text{Mean}$">
 <a class="anchor" href="#%24%5Ctext%7BDistribution%7D-%5Cimplies-%5Ctext%7BMean%7D%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>$\text{Distribution} \implies \text{Mean}$<a class="anchor-link" href="#%24%5Ctext%7BDistribution%7D-%5Cimplies-%5Ctext%7BMean%7D%24"> </a>
 </h3>
+<p>For a given set of random variables $X,Y$, if the variables have the same distribution, this implies they have the same mean. Note that the converse is not implied.</p>
+<ul>
+<li>$E(g(X)) = E(g(Y))$, where $g$ is a distribution function.</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -713,6 +744,8 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="Conditional-Expected-Value">
 <a class="anchor" href="#Conditional-Expected-Value" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conditional Expected Value<a class="anchor-link" href="#Conditional-Expected-Value"> </a>
 </h3>
+<p>Expected values can be defined conditionally, as conditional distributions are probability functions. That is, $E(X|A) = \sum_x x P(X=x|A)$ for some event A</p>
+
 </div>
 </div>
 </div>
