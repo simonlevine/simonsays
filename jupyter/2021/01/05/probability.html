@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      8 min read
+      9 min read
     
 </span></p>
 
@@ -194,13 +194,17 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Variance-and-Standard-Deviation-(w.r.t.-Expectation)">Variance and Standard Deviation (w.r.t. Expectation) </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)">Continuous Random Variables, Law of the Unconscious Statistician (LOTUS), and the Universaility of Uniform (UoU) </a>
+<li class="toc-entry toc-h1"><a href="#Properties-of-Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)">Properties of Continuous Random Variables, Law of the Unconscious Statistician (LOTUS), and the Universaility of Uniform (UoU) </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Continuous-Random-Variables">Continuous Random Variables </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Probability-of-a-CRV-in-a-Given-Interval">Probability of a CRV in a Given Interval </a></li>
 <li class="toc-entry toc-h3"><a href="#The-Probability-Density-Function-of-a-CRV">The Probability Density Function of a CRV </a></li>
 <li class="toc-entry toc-h3"><a href="#Expected-Values-of-CRVs-versus-DRVs">Expected Values of CRVs versus DRVs </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Continuous:">Continuous: </a>
+<ul>
 <li class="toc-entry toc-h3"><a href="#Law-of-the-Unconscious-Statistician-(LOTUS)">Law of the Unconscious Statistician (LOTUS) </a></li>
 <li class="toc-entry toc-h3"><a href="#$g(RV_i)-=-RV_j$:-The-function-of-a-random-variable-is-itself-a-random-variable.">$g(RV_i) = RV_j$: The function of a random variable is itself a random variable. </a></li>
 </ul>
@@ -803,14 +807,20 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h2 id="Variance-and-Standard-Deviation-(w.r.t.-Expectation)">
 <a class="anchor" href="#Variance-and-Standard-Deviation-(w.r.t.-Expectation)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variance and Standard Deviation (w.r.t. Expectation)<a class="anchor-link" href="#Variance-and-Standard-Deviation-(w.r.t.-Expectation)"> </a>
 </h2>
+<p>With respect to Expectation, we can write Variance and Standard Deviation of some random variable $X$ similarly to the canonical forms.</p>
+<ul>
+<li>$Var(X) = E(X-E(X))^2 = E(X^2) - (E(X))^2$</li>
+<li>$StdDev(X) = \sqrt{(Var(X))}$</li>
+</ul>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)">
-<a class="anchor" href="#Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Continuous Random Variables, Law of the Unconscious Statistician (LOTUS), and the Universaility of Uniform (UoU)<a class="anchor-link" href="#Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)"> </a>
+<h1 id="Properties-of-Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)">
+<a class="anchor" href="#Properties-of-Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Properties of Continuous Random Variables, Law of the Unconscious Statistician (LOTUS), and the Universaility of Uniform (UoU)<a class="anchor-link" href="#Properties-of-Continuous-Random-Variables,-Law-of-the-Unconscious-Statistician-(LOTUS),-and-the-Universaility-of-Uniform-(UoU)"> </a>
 </h1>
 </div>
 </div>
@@ -830,6 +840,12 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="Probability-of-a-CRV-in-a-Given-Interval">
 <a class="anchor" href="#Probability-of-a-CRV-in-a-Given-Interval" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability of a CRV in a Given Interval<a class="anchor-link" href="#Probability-of-a-CRV-in-a-Given-Interval"> </a>
 </h3>
+<p>The probability of a CRV taking on values in some interval can be found by taking the difference of cumulative distribution function at the bounds of the interval.</p>
+<ul>
+<li>$P(a\leq X \leq b) = P(X \leq b) - P(X \leq a) = F_X(b) = F_X(a)$</li>
+</ul>
+<p>For instance, in the case of a normally distributed random variable $X \sim \mathcal{N}(\mu,\sigma^2)$, $P(a \leq X \leq b) = \phi(\frac{b-\mu}{\sigma}) - \phi(\frac{a-\mu}{\sigma})$</p>
+
 </div>
 </div>
 </div>
@@ -839,6 +855,9 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="The-Probability-Density-Function-of-a-CRV">
 <a class="anchor" href="#The-Probability-Density-Function-of-a-CRV" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Probability Density Function of a CRV<a class="anchor-link" href="#The-Probability-Density-Function-of-a-CRV"> </a>
 </h3>
+<p>Note that we can take derivates or integrate between Probability Density Functions $f(x)$ and Cumulative Distribution Functions $F_X(x)$.</p>
+<p>That is, $F'(x)=f(x)$, and $F(x) = \int_{-\infty}^x f(t) dt$. Therefore, to get the probability of a CRV being on a certain interval, instead of integrating over the entire range of values and subtracting at bounds (as was done above), we can simply take the integral between the bounds: $F(b)-F(a) = \int_a^bf(x)dx$</p>
+
 </div>
 </div>
 </div>
@@ -848,6 +867,9 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="Expected-Values-of-CRVs-versus-DRVs">
 <a class="anchor" href="#Expected-Values-of-CRVs-versus-DRVs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Expected Values of CRVs versus DRVs<a class="anchor-link" href="#Expected-Values-of-CRVs-versus-DRVs"> </a>
 </h3>
+<h2 id="Continuous:">
+<a class="anchor" href="#Continuous:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Continuous:<a class="anchor-link" href="#Continuous:"> </a>
+</h2>
 </div>
 </div>
 </div>
