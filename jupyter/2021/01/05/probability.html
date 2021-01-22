@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      11 min read
+      12 min read
     
 </span></p>
 
@@ -214,7 +214,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Moment-Generating-Functions">Moment-Generating Functions </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#Joint-Probability-Density-Functions-(PDFs)-and-Comulative-Distribution-Functions-(CDFs)">Joint Probability Density Functions (PDFs) and Comulative Distribution Functions (CDFs) </a>
+<li class="toc-entry toc-h1"><a href="#Joint-Probability-Density-Functions-(PDFs)-and-Cumulative-Distribution-Functions-(CDFs)">Joint Probability Density Functions (PDFs) and Cumulative Distribution Functions (CDFs) </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Joint-Distributions">Joint Distributions </a></li>
 <li class="toc-entry toc-h2"><a href="#Conditional-Distributions">Conditional Distributions </a>
@@ -957,14 +957,21 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h2 id="Moment-Generating-Functions">
 <a class="anchor" href="#Moment-Generating-Functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Moment-Generating Functions<a class="anchor-link" href="#Moment-Generating-Functions"> </a>
 </h2>
+<p>The $k$th derivative of the moment generating function, when evaluated at $0$, is the $k$th moment of a random variable $X$. That is, $$\mu_k = E(X^k) = M_X^{(k)}(0)$$. Thus, the moment-generating function <em>generates the moment</em>.</p>
+<p>For any random variable $X$, $M_X(t) = E(e^{tX})$ is the MGF for $X$ if it it exists for some open interval containing $0$.</p>
+<p>We can show the first point by Taylor expansion. Note that the Taylor series for $f(x)$ about $x=t$ is $$f(x) = 
+\sum_{n=0}^{\infty} \frac{f^{(n)}(t)}{n!}(x-a)^{n}$$</p>
+<p>With regard to the expansion of $e^{tX}$, we get that $M_X(t) = E(e^{tX}) = \sum_{k=0}^\infty \frac{E(X^k)t^k}{k!} = \sum_{k=0}^\infty \frac{\mu_k t^k}{k!} $</p>
+<p>There is more to say about moment-generating functions, but I will leave it for now. Like characteristic functions, they are an alternative specification for probability distribution to density functions or cumulative distribution functions. However, we almost always use PMFs/PDFs/CDFs in practice.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Joint-Probability-Density-Functions-(PDFs)-and-Comulative-Distribution-Functions-(CDFs)">
-<a class="anchor" href="#Joint-Probability-Density-Functions-(PDFs)-and-Comulative-Distribution-Functions-(CDFs)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Joint Probability Density Functions (PDFs) and Comulative Distribution Functions (CDFs)<a class="anchor-link" href="#Joint-Probability-Density-Functions-(PDFs)-and-Comulative-Distribution-Functions-(CDFs)"> </a>
+<h1 id="Joint-Probability-Density-Functions-(PDFs)-and-Cumulative-Distribution-Functions-(CDFs)">
+<a class="anchor" href="#Joint-Probability-Density-Functions-(PDFs)-and-Cumulative-Distribution-Functions-(CDFs)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Joint Probability Density Functions (PDFs) and Cumulative Distribution Functions (CDFs)<a class="anchor-link" href="#Joint-Probability-Density-Functions-(PDFs)-and-Cumulative-Distribution-Functions-(CDFs)"> </a>
 </h1>
 </div>
 </div>
