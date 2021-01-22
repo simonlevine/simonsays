@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      11 min read
     
 </span></p>
 
@@ -884,10 +884,9 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h3 id="Law-of-the-Unconscious-Statistician-(LOTUS)">
 <a class="anchor" href="#Law-of-the-Unconscious-Statistician-(LOTUS)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Law of the Unconscious Statistician (LOTUS)<a class="anchor-link" href="#Law-of-the-Unconscious-Statistician-(LOTUS)"> </a>
 </h3>
-<ul>
-<li>So named for its purported tendency to be used as a definition rather than a rigorous mathematical statement, the LOTUS shows that the expected value of a <em>function</em> of a random variable $f(X)$ similarly to the expected value of the random variable $X$ itself.</li>
-</ul>
+<p>So named for its purported tendency to be used as a definition rather than a rigorous mathematical statement, the LOTUS shows that the expected value of a <em>function</em> of a random variable $f(X)$ similarly to the expected value of the random variable $X$ itself.</p>
 <p>That is, in the discrete case, $E(g(X)) = \sum_x g(x) P(X=x)$, and for the continous case, $E(g(x)) = \int_{-\infty}^{\infty}g(x)f(x)dx$, where $P(X=x)$ is the probability mass function of $X$ at some discrete real value $x$ and $f(x)$ is the probability density function.</p>
+<p>Note that the function of a random variable is itself a random variable, implying that it is sufficient to know the PMF or PDF of $X$ in order to find $E(g(X))$.</p>
 
 </div>
 </div>
@@ -920,7 +919,6 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 </ul>
 </li>
 </ul>
-<p>Now, in Python.</p>
 
 </div>
 </div>
@@ -940,6 +938,16 @@ $$P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A|B,C)P(B|C)P(C)}{P(B|C)P(C)} = P
 <h2 id="Moments">
 <a class="anchor" href="#Moments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Moments<a class="anchor-link" href="#Moments"> </a>
 </h2>
+<p>Moments describe the topology of a distribution. For instance, given RV $X$ with mean $\mu$ and standard deviation $\sigma$, for $ X_{\text{standardized}} = z = \frac{(X-\mu)}{\sigma}$. Then, the $k$th standard moment of $X$ is given by $$m_k=E(Z^k)$$</p>
+<p>Some important "moments" follow from this expression:</p>
+<ul>
+<li>mean = $E(X) = m_1 = \mu_1$</li>
+<li>variance = $Var(X) = \mu_2 - \mu_1^2$</li>
+<li>skewness = $Skew(X) = m_3$ = measure of (lack of) symmetry</li>
+<li>kurtosis = $Kurt(X) = m_4 - 3$ = measure of tailedness</li>
+</ul>
+<p>Note other equivalent expressions also follow.</p>
+
 </div>
 </div>
 </div>
