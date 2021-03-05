@@ -26,3 +26,5 @@ _notebooks/data/MNIST/raw/train-images-idx3-ubyte
 *.2
 *.1
 /Users/simon/GitHub/simonsays/_notebooks/lightning_logs/version_0/*.yaml
+*.ckpt
+*.yaml
