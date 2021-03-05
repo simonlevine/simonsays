@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      18 min read
     
 </span></p>
 
@@ -141,6 +141,15 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Task:">Task: </a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#Model-Instantiation">Model Instantiation </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Basic-CNN">Basic CNN </a></li>
+<li class="toc-entry toc-h3"><a href="#CNN-with-Trainable-Embeddings">CNN with Trainable Embeddings </a></li>
+<li class="toc-entry toc-h3"><a href="#The-DNA-Transformer!">The DNA Transformer! </a></li>
+<li class="toc-entry toc-h3"><a href="#Integration:-The-Training-Module">Integration: The Training Module </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Training">Training </a></li>
 </ul>
 </li>
 </ul><!--
@@ -178,7 +187,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Get the data.</span>
 </pre></div>
 
     </div>
@@ -358,7 +367,7 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fe49424e310&gt;</pre>
+<pre>&lt;AxesSubplot:title={'center':'True     2010\nFalse    1990\nName: y, dtype: int64'}, ylabel='Frequency'&gt;</pre>
 </div>
 
 </div>
@@ -372,10 +381,22 @@ window.onload = wrap_img;
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 <!-- Created with matplotlib (https://matplotlib.org/) -->
 <svg height="290.511pt" version="1.1" viewbox="0 0 395.328125 290.511" width="395.328125pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <work>
+    <type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></type>
+    <date>2021-03-04T22:09:16.635021</date>
+    <format>image/svg+xml</format>
+    <creator>
+     <agent>
+      <title>Matplotlib v3.3.2, https://matplotlib.org/</title>
+     </agent>
+    </creator>
+   </work>
+  </rdf>
+ </metadata>
  <defs>
-  <style type="text/css">
-*{stroke-linecap:butt;stroke-linejoin:round;}
-  </style>
+  <style type="text/css">*{stroke-linecap:butt;stroke-linejoin:round;}</style>
  </defs>
  <g id="figure_1">
   <g id="patch_1">
@@ -396,7 +417,7 @@ z
 "></path>
    </g>
    <g id="patch_3">
-    <path clip-path="url(#p13d87deb40)" d="M 68.546307 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 68.546307 266.632875 
 L 98.98267 266.632875 
 L 98.98267 61.607715 
 L 68.546307 61.607715 
@@ -404,7 +425,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_4">
-    <path clip-path="url(#p13d87deb40)" d="M 98.98267 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 98.98267 266.632875 
 L 129.419034 266.632875 
 L 129.419034 266.632875 
 L 98.98267 266.632875 
@@ -412,7 +433,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_5">
-    <path clip-path="url(#p13d87deb40)" d="M 129.419034 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 129.419034 266.632875 
 L 159.855398 266.632875 
 L 159.855398 266.632875 
 L 129.419034 266.632875 
@@ -420,7 +441,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_6">
-    <path clip-path="url(#p13d87deb40)" d="M 159.855398 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 159.855398 266.632875 
 L 190.291761 266.632875 
 L 190.291761 266.632875 
 L 159.855398 266.632875 
@@ -428,7 +449,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_7">
-    <path clip-path="url(#p13d87deb40)" d="M 190.291761 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 190.291761 266.632875 
 L 220.728125 266.632875 
 L 220.728125 266.632875 
 L 190.291761 266.632875 
@@ -436,7 +457,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_8">
-    <path clip-path="url(#p13d87deb40)" d="M 220.728125 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 220.728125 266.632875 
 L 251.164489 266.632875 
 L 251.164489 266.632875 
 L 220.728125 266.632875 
@@ -444,7 +465,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_9">
-    <path clip-path="url(#p13d87deb40)" d="M 251.164489 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 251.164489 266.632875 
 L 281.600852 266.632875 
 L 281.600852 266.632875 
 L 251.164489 266.632875 
@@ -452,7 +473,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_10">
-    <path clip-path="url(#p13d87deb40)" d="M 281.600852 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 281.600852 266.632875 
 L 312.037216 266.632875 
 L 312.037216 266.632875 
 L 281.600852 266.632875 
@@ -460,7 +481,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_11">
-    <path clip-path="url(#p13d87deb40)" d="M 312.037216 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 312.037216 266.632875 
 L 342.47358 266.632875 
 L 342.47358 266.632875 
 L 312.037216 266.632875 
@@ -468,7 +489,7 @@ z
 " style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_12">
-    <path clip-path="url(#p13d87deb40)" d="M 342.47358 266.632875 
+    <path clip-path="url(#p12fe265023)" d="M 342.47358 266.632875 
 L 372.909943 266.632875 
 L 372.909943 59.547161 
 L 342.47358 59.547161 
@@ -481,16 +502,17 @@ z
       <defs>
        <path d="M 0 0 
 L 0 3.5 
-" id="m812d83f0db" style="stroke:#ffffff;stroke-width:0.8;"></path>
+" id="m9be5eb4995" style="stroke:#ffffff;stroke-width:0.8;"></path>
       </defs>
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="68.546307" xlink:href="#m812d83f0db" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="68.546307" xlink:href="#m9be5eb4995" y="266.632875"></use>
       </g>
      </g>
      <g id="text_1">
       <!-- 0.0 -->
-      <defs>
-       <path d="M 31.78125 66.40625 
+      <g style="fill:#ffffff;" transform="translate(60.594744 281.231312)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 31.78125 66.40625 
 Q 24.171875 66.40625 20.328125 58.90625 
 Q 16.5 51.421875 16.5 36.375 
 Q 16.5 21.390625 20.328125 13.890625 
@@ -511,14 +533,13 @@ Q 6.59375 54.828125 13.0625 64.515625
 Q 19.53125 74.21875 31.78125 74.21875 
 z
 " id="DejaVuSans-48"></path>
-       <path d="M 10.6875 12.40625 
+        <path d="M 10.6875 12.40625 
 L 21 12.40625 
 L 21 0 
 L 10.6875 0 
 z
 " id="DejaVuSans-46"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(60.594744 281.231312)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-48"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
        <use x="95.410156" xlink:href="#DejaVuSans-48"></use>
@@ -528,13 +549,14 @@ z
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="129.419034" xlink:href="#m812d83f0db" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="129.419034" xlink:href="#m9be5eb4995" y="266.632875"></use>
       </g>
      </g>
      <g id="text_2">
       <!-- 0.2 -->
-      <defs>
-       <path d="M 19.1875 8.296875 
+      <g style="fill:#ffffff;" transform="translate(121.467472 281.231312)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 19.1875 8.296875 
 L 53.609375 8.296875 
 L 53.609375 0 
 L 7.328125 0 
@@ -558,8 +580,7 @@ Q 44.1875 33.984375 37.640625 27.21875
 Q 31.109375 20.453125 19.1875 8.296875 
 z
 " id="DejaVuSans-50"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(121.467472 281.231312)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-48"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
        <use x="95.410156" xlink:href="#DejaVuSans-50"></use>
@@ -569,13 +590,14 @@ z
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="190.291761" xlink:href="#m812d83f0db" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="190.291761" xlink:href="#m9be5eb4995" y="266.632875"></use>
       </g>
      </g>
      <g id="text_3">
       <!-- 0.4 -->
-      <defs>
-       <path d="M 37.796875 64.3125 
+      <g style="fill:#ffffff;" transform="translate(182.340199 281.231312)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 37.796875 64.3125 
 L 12.890625 25.390625 
 L 37.796875 25.390625 
 z
@@ -592,8 +614,7 @@ L 4.890625 17.1875
 L 4.890625 26.703125 
 z
 " id="DejaVuSans-52"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(182.340199 281.231312)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-48"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
        <use x="95.410156" xlink:href="#DejaVuSans-52"></use>
@@ -603,13 +624,14 @@ z
     <g id="xtick_4">
      <g id="line2d_4">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="251.164489" xlink:href="#m812d83f0db" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="251.164489" xlink:href="#m9be5eb4995" y="266.632875"></use>
       </g>
      </g>
      <g id="text_4">
       <!-- 0.6 -->
-      <defs>
-       <path d="M 33.015625 40.375 
+      <g style="fill:#ffffff;" transform="translate(243.212926 281.231312)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 33.015625 40.375 
 Q 26.375 40.375 22.484375 35.828125 
 Q 18.609375 31.296875 18.609375 23.390625 
 Q 18.609375 15.53125 22.484375 10.953125 
@@ -639,8 +661,7 @@ Q 40.921875 74.21875 44.703125 73.484375
 Q 48.484375 72.75 52.59375 71.296875 
 z
 " id="DejaVuSans-54"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(243.212926 281.231312)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-48"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
        <use x="95.410156" xlink:href="#DejaVuSans-54"></use>
@@ -650,13 +671,14 @@ z
     <g id="xtick_5">
      <g id="line2d_5">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="312.037216" xlink:href="#m812d83f0db" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="312.037216" xlink:href="#m9be5eb4995" y="266.632875"></use>
       </g>
      </g>
      <g id="text_5">
       <!-- 0.8 -->
-      <defs>
-       <path d="M 31.78125 34.625 
+      <g style="fill:#ffffff;" transform="translate(304.085653 281.231312)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 31.78125 34.625 
 Q 24.75 34.625 20.71875 30.859375 
 Q 16.703125 27.09375 16.703125 20.515625 
 Q 16.703125 13.921875 20.71875 10.15625 
@@ -695,8 +717,7 @@ Q 25.390625 66.40625 21.84375 63.234375
 Q 18.3125 60.0625 18.3125 54.390625 
 z
 " id="DejaVuSans-56"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(304.085653 281.231312)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-48"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
        <use x="95.410156" xlink:href="#DejaVuSans-56"></use>
@@ -706,13 +727,14 @@ z
     <g id="xtick_6">
      <g id="line2d_6">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="372.909943" xlink:href="#m812d83f0db" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="372.909943" xlink:href="#m9be5eb4995" y="266.632875"></use>
       </g>
      </g>
      <g id="text_6">
       <!-- 1.0 -->
-      <defs>
-       <path d="M 12.40625 8.296875 
+      <g style="fill:#ffffff;" transform="translate(364.958381 281.231312)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 12.40625 8.296875 
 L 28.515625 8.296875 
 L 28.515625 63.921875 
 L 10.984375 60.40625 
@@ -725,8 +747,7 @@ L 54.390625 0
 L 12.40625 0 
 z
 " id="DejaVuSans-49"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(364.958381 281.231312)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-49"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
        <use x="95.410156" xlink:href="#DejaVuSans-48"></use>
@@ -740,10 +761,10 @@ z
       <defs>
        <path d="M 0 0 
 L -3.5 0 
-" id="m4b52eadb9f" style="stroke:#ffffff;stroke-width:0.8;"></path>
+" id="m722114d0e1" style="stroke:#ffffff;stroke-width:0.8;"></path>
       </defs>
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="266.632875"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="266.632875"></use>
       </g>
      </g>
      <g id="text_7">
@@ -756,13 +777,14 @@ L -3.5 0
     <g id="ytick_2">
      <g id="line2d_8">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="240.875945"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="240.875945"></use>
       </g>
      </g>
      <g id="text_8">
       <!-- 250 -->
-      <defs>
-       <path d="M 10.796875 72.90625 
+      <g style="fill:#ffffff;" transform="translate(27.240625 244.675164)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 10.796875 72.90625 
 L 49.515625 72.90625 
 L 49.515625 64.59375 
 L 19.828125 64.59375 
@@ -786,8 +808,7 @@ Q 22.75 39.890625 18.8125 39.015625
 Q 14.890625 38.140625 10.796875 36.28125 
 z
 " id="DejaVuSans-53"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(27.240625 244.675164)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-50"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-53"></use>
        <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
@@ -797,7 +818,7 @@ z
     <g id="ytick_3">
      <g id="line2d_9">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="215.119016"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="215.119016"></use>
       </g>
      </g>
      <g id="text_9">
@@ -812,13 +833,14 @@ z
     <g id="ytick_4">
      <g id="line2d_10">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="189.362086"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="189.362086"></use>
       </g>
      </g>
      <g id="text_10">
       <!-- 750 -->
-      <defs>
-       <path d="M 8.203125 72.90625 
+      <g style="fill:#ffffff;" transform="translate(27.240625 193.161305)scale(0.1 -0.1)">
+       <defs>
+        <path d="M 8.203125 72.90625 
 L 55.078125 72.90625 
 L 55.078125 68.703125 
 L 28.609375 0 
@@ -827,8 +849,7 @@ L 43.21875 64.59375
 L 8.203125 64.59375 
 z
 " id="DejaVuSans-55"></path>
-      </defs>
-      <g style="fill:#ffffff;" transform="translate(27.240625 193.161305)scale(0.1 -0.1)">
+       </defs>
        <use xlink:href="#DejaVuSans-55"></use>
        <use x="63.623047" xlink:href="#DejaVuSans-53"></use>
        <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
@@ -838,7 +859,7 @@ z
     <g id="ytick_5">
      <g id="line2d_11">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="163.605156"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="163.605156"></use>
       </g>
      </g>
      <g id="text_11">
@@ -854,7 +875,7 @@ z
     <g id="ytick_6">
      <g id="line2d_12">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="137.848227"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="137.848227"></use>
       </g>
      </g>
      <g id="text_12">
@@ -870,7 +891,7 @@ z
     <g id="ytick_7">
      <g id="line2d_13">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="112.091297"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="112.091297"></use>
       </g>
      </g>
      <g id="text_13">
@@ -886,7 +907,7 @@ z
     <g id="ytick_8">
      <g id="line2d_14">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="86.334368"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="86.334368"></use>
       </g>
      </g>
      <g id="text_14">
@@ -902,7 +923,7 @@ z
     <g id="ytick_9">
      <g id="line2d_15">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m4b52eadb9f" y="60.577438"></use>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#m722114d0e1" y="60.577438"></use>
       </g>
      </g>
      <g id="text_15">
@@ -917,8 +938,9 @@ z
     </g>
     <g id="text_16">
      <!-- Frequency -->
-     <defs>
-      <path d="M 9.8125 72.90625 
+     <g style="fill:#ffffff;" transform="translate(14.798438 183.742562)rotate(-90)scale(0.1 -0.1)">
+      <defs>
+       <path d="M 9.8125 72.90625 
 L 51.703125 72.90625 
 L 51.703125 64.59375 
 L 19.671875 64.59375 
@@ -930,7 +952,7 @@ L 19.671875 0
 L 9.8125 0 
 z
 " id="DejaVuSans-70"></path>
-      <path d="M 41.109375 46.296875 
+       <path d="M 41.109375 46.296875 
 Q 39.59375 47.171875 37.8125 47.578125 
 Q 36.03125 48 33.890625 48 
 Q 26.265625 48 22.1875 43.046875 
@@ -946,7 +968,7 @@ Q 37.453125 56 38.578125 55.875
 Q 39.703125 55.765625 41.0625 55.515625 
 z
 " id="DejaVuSans-114"></path>
-      <path d="M 56.203125 29.59375 
+       <path d="M 56.203125 29.59375 
 L 56.203125 25.203125 
 L 14.890625 25.203125 
 Q 15.484375 15.921875 20.484375 11.0625 
@@ -970,7 +992,7 @@ Q 24.90625 48.390625 20.390625 44.140625
 Q 15.875 39.890625 15.1875 32.171875 
 z
 " id="DejaVuSans-101"></path>
-      <path d="M 14.796875 27.296875 
+       <path d="M 14.796875 27.296875 
 Q 14.796875 17.390625 18.875 11.75 
 Q 22.953125 6.109375 30.078125 6.109375 
 Q 37.203125 6.109375 41.296875 11.75 
@@ -995,7 +1017,7 @@ L 54.390625 -20.796875
 L 45.40625 -20.796875 
 z
 " id="DejaVuSans-113"></path>
-      <path d="M 8.5 21.578125 
+       <path d="M 8.5 21.578125 
 L 8.5 54.6875 
 L 17.484375 54.6875 
 L 17.484375 21.921875 
@@ -1016,7 +1038,7 @@ z
 M 31.109375 56 
 z
 " id="DejaVuSans-117"></path>
-      <path d="M 54.890625 33.015625 
+       <path d="M 54.890625 33.015625 
 L 54.890625 0 
 L 45.90625 0 
 L 45.90625 32.71875 
@@ -1035,7 +1057,7 @@ Q 45.21875 56 50.046875 50.171875
 Q 54.890625 44.34375 54.890625 33.015625 
 z
 " id="DejaVuSans-110"></path>
-      <path d="M 48.78125 52.59375 
+       <path d="M 48.78125 52.59375 
 L 48.78125 44.1875 
 Q 44.96875 46.296875 41.140625 47.34375 
 Q 37.3125 48.390625 33.40625 48.390625 
@@ -1056,7 +1078,7 @@ Q 37.15625 56 41.109375 55.140625
 Q 45.0625 54.296875 48.78125 52.59375 
 z
 " id="DejaVuSans-99"></path>
-      <path d="M 32.171875 -5.078125 
+       <path d="M 32.171875 -5.078125 
 Q 28.375 -14.84375 24.75 -17.8125 
 Q 21.140625 -20.796875 15.09375 -20.796875 
 L 7.90625 -20.796875 
@@ -1072,17 +1094,16 @@ L 46.6875 54.6875
 L 56.203125 54.6875 
 z
 " id="DejaVuSans-121"></path>
-     </defs>
-     <g style="fill:#ffffff;" transform="translate(14.798438 184.210531)rotate(-90)scale(0.1 -0.1)">
+      </defs>
       <use xlink:href="#DejaVuSans-70"></use>
-      <use x="57.410156" xlink:href="#DejaVuSans-114"></use>
-      <use x="98.492188" xlink:href="#DejaVuSans-101"></use>
-      <use x="160.015625" xlink:href="#DejaVuSans-113"></use>
-      <use x="223.492188" xlink:href="#DejaVuSans-117"></use>
-      <use x="286.871094" xlink:href="#DejaVuSans-101"></use>
-      <use x="348.394531" xlink:href="#DejaVuSans-110"></use>
-      <use x="411.773438" xlink:href="#DejaVuSans-99"></use>
-      <use x="466.753906" xlink:href="#DejaVuSans-121"></use>
+      <use x="50.269531" xlink:href="#DejaVuSans-114"></use>
+      <use x="89.132812" xlink:href="#DejaVuSans-101"></use>
+      <use x="150.65625" xlink:href="#DejaVuSans-113"></use>
+      <use x="214.132812" xlink:href="#DejaVuSans-117"></use>
+      <use x="277.511719" xlink:href="#DejaVuSans-101"></use>
+      <use x="339.035156" xlink:href="#DejaVuSans-110"></use>
+      <use x="402.414062" xlink:href="#DejaVuSans-99"></use>
+      <use x="457.394531" xlink:href="#DejaVuSans-121"></use>
      </g>
     </g>
    </g>
@@ -1108,8 +1129,9 @@ L 388.128125 49.192875
    </g>
    <g id="text_17">
     <!-- True     2010 -->
-    <defs>
-     <path d="M -0.296875 72.90625 
+    <g style="fill:#ffffff;" transform="translate(183.183125 16.318125)scale(0.12 -0.12)">
+     <defs>
+      <path d="M -0.296875 72.90625 
 L 61.375 72.90625 
 L 61.375 64.59375 
 L 35.5 64.59375 
@@ -1119,26 +1141,26 @@ L 25.59375 64.59375
 L -0.296875 64.59375 
 z
 " id="DejaVuSans-84"></path>
-     <path id="DejaVuSans-32"></path>
-    </defs>
-    <g style="fill:#ffffff;" transform="translate(182.31125 16.318125)scale(0.12 -0.12)">
+      <path id="DejaVuSans-32"></path>
+     </defs>
      <use xlink:href="#DejaVuSans-84"></use>
-     <use x="60.865234" xlink:href="#DejaVuSans-114"></use>
-     <use x="101.978516" xlink:href="#DejaVuSans-117"></use>
-     <use x="165.357422" xlink:href="#DejaVuSans-101"></use>
-     <use x="226.880859" xlink:href="#DejaVuSans-32"></use>
-     <use x="258.667969" xlink:href="#DejaVuSans-32"></use>
-     <use x="290.455078" xlink:href="#DejaVuSans-32"></use>
-     <use x="322.242188" xlink:href="#DejaVuSans-32"></use>
-     <use x="354.029297" xlink:href="#DejaVuSans-32"></use>
-     <use x="385.816406" xlink:href="#DejaVuSans-50"></use>
-     <use x="449.439453" xlink:href="#DejaVuSans-48"></use>
-     <use x="513.0625" xlink:href="#DejaVuSans-49"></use>
-     <use x="576.685547" xlink:href="#DejaVuSans-48"></use>
+     <use x="46.333984" xlink:href="#DejaVuSans-114"></use>
+     <use x="87.447266" xlink:href="#DejaVuSans-117"></use>
+     <use x="150.826172" xlink:href="#DejaVuSans-101"></use>
+     <use x="212.349609" xlink:href="#DejaVuSans-32"></use>
+     <use x="244.136719" xlink:href="#DejaVuSans-32"></use>
+     <use x="275.923828" xlink:href="#DejaVuSans-32"></use>
+     <use x="307.710938" xlink:href="#DejaVuSans-32"></use>
+     <use x="339.498047" xlink:href="#DejaVuSans-32"></use>
+     <use x="371.285156" xlink:href="#DejaVuSans-50"></use>
+     <use x="434.908203" xlink:href="#DejaVuSans-48"></use>
+     <use x="498.53125" xlink:href="#DejaVuSans-49"></use>
+     <use x="562.154297" xlink:href="#DejaVuSans-48"></use>
     </g>
     <!-- False    1990 -->
-    <defs>
-     <path d="M 34.28125 27.484375 
+    <g style="fill:#ffffff;" transform="translate(182.765938 29.7555)scale(0.12 -0.12)">
+     <defs>
+      <path d="M 34.28125 27.484375 
 Q 23.390625 27.484375 19.1875 25 
 Q 14.984375 22.515625 14.984375 16.5 
 Q 14.984375 11.71875 18.140625 8.90625 
@@ -1170,13 +1192,13 @@ Q 40.484375 56 46.34375 49.84375
 Q 52.203125 43.703125 52.203125 31.203125 
 z
 " id="DejaVuSans-97"></path>
-     <path d="M 9.421875 75.984375 
+      <path d="M 9.421875 75.984375 
 L 18.40625 75.984375 
 L 18.40625 0 
 L 9.421875 0 
 z
 " id="DejaVuSans-108"></path>
-     <path d="M 44.28125 53.078125 
+      <path d="M 44.28125 53.078125 
 L 44.28125 44.578125 
 Q 40.484375 46.53125 36.375 47.5 
 Q 32.28125 48.484375 27.875 48.484375 
@@ -1207,7 +1229,7 @@ Q 31.78125 56 36.171875 55.265625
 Q 40.578125 54.546875 44.28125 53.078125 
 z
 " id="DejaVuSans-115"></path>
-     <path d="M 10.984375 1.515625 
+      <path d="M 10.984375 1.515625 
 L 10.984375 10.5 
 Q 14.703125 8.734375 18.5 7.8125 
 Q 22.3125 6.890625 25.984375 6.890625 
@@ -1237,25 +1259,25 @@ Q 16.21875 41.5 20.09375 36.953125
 Q 23.96875 32.421875 30.609375 32.421875 
 z
 " id="DejaVuSans-57"></path>
-    </defs>
-    <g style="fill:#ffffff;" transform="translate(182.226875 29.7555)scale(0.12 -0.12)">
+     </defs>
      <use xlink:href="#DejaVuSans-70"></use>
-     <use x="57.378906" xlink:href="#DejaVuSans-97"></use>
-     <use x="118.658203" xlink:href="#DejaVuSans-108"></use>
-     <use x="146.441406" xlink:href="#DejaVuSans-115"></use>
-     <use x="198.541016" xlink:href="#DejaVuSans-101"></use>
-     <use x="260.064453" xlink:href="#DejaVuSans-32"></use>
-     <use x="291.851562" xlink:href="#DejaVuSans-32"></use>
-     <use x="323.638672" xlink:href="#DejaVuSans-32"></use>
-     <use x="355.425781" xlink:href="#DejaVuSans-32"></use>
-     <use x="387.212891" xlink:href="#DejaVuSans-49"></use>
-     <use x="450.835938" xlink:href="#DejaVuSans-57"></use>
-     <use x="514.458984" xlink:href="#DejaVuSans-57"></use>
-     <use x="578.082031" xlink:href="#DejaVuSans-48"></use>
+     <use x="48.394531" xlink:href="#DejaVuSans-97"></use>
+     <use x="109.673828" xlink:href="#DejaVuSans-108"></use>
+     <use x="137.457031" xlink:href="#DejaVuSans-115"></use>
+     <use x="189.556641" xlink:href="#DejaVuSans-101"></use>
+     <use x="251.080078" xlink:href="#DejaVuSans-32"></use>
+     <use x="282.867188" xlink:href="#DejaVuSans-32"></use>
+     <use x="314.654297" xlink:href="#DejaVuSans-32"></use>
+     <use x="346.441406" xlink:href="#DejaVuSans-32"></use>
+     <use x="378.228516" xlink:href="#DejaVuSans-49"></use>
+     <use x="441.851562" xlink:href="#DejaVuSans-57"></use>
+     <use x="505.474609" xlink:href="#DejaVuSans-57"></use>
+     <use x="569.097656" xlink:href="#DejaVuSans-48"></use>
     </g>
     <!-- Name: y, dtype: int64 -->
-    <defs>
-     <path d="M 9.8125 72.90625 
+    <g style="fill:#ffffff;" transform="translate(155.135 43.192875)scale(0.12 -0.12)">
+     <defs>
+      <path d="M 9.8125 72.90625 
 L 23.09375 72.90625 
 L 55.421875 11.921875 
 L 55.421875 72.90625 
@@ -1267,7 +1289,7 @@ L 19.390625 0
 L 9.8125 0 
 z
 " id="DejaVuSans-78"></path>
-     <path d="M 52 44.1875 
+      <path d="M 52 44.1875 
 Q 55.375 50.25 60.0625 53.125 
 Q 64.75 56 71.09375 56 
 Q 79.640625 56 84.28125 50.015625 
@@ -1297,7 +1319,7 @@ Q 41.65625 56 45.828125 52.96875
 Q 50 49.953125 52 44.1875 
 z
 " id="DejaVuSans-109"></path>
-     <path d="M 11.71875 12.40625 
+      <path d="M 11.71875 12.40625 
 L 22.015625 12.40625 
 L 22.015625 0 
 L 11.71875 0 
@@ -1308,7 +1330,7 @@ L 22.015625 39.3125
 L 11.71875 39.3125 
 z
 " id="DejaVuSans-58"></path>
-     <path d="M 11.71875 12.40625 
+      <path d="M 11.71875 12.40625 
 L 22.015625 12.40625 
 L 22.015625 4 
 L 14.015625 -11.625 
@@ -1316,7 +1338,7 @@ L 7.71875 -11.625
 L 11.71875 4 
 z
 " id="DejaVuSans-44"></path>
-     <path d="M 45.40625 46.390625 
+      <path d="M 45.40625 46.390625 
 L 45.40625 75.984375 
 L 54.390625 75.984375 
 L 54.390625 0 
@@ -1342,7 +1364,7 @@ Q 22.953125 48.484375 18.875 42.84375
 Q 14.796875 37.203125 14.796875 27.296875 
 z
 " id="DejaVuSans-100"></path>
-     <path d="M 18.3125 70.21875 
+      <path d="M 18.3125 70.21875 
 L 18.3125 54.6875 
 L 36.8125 54.6875 
 L 36.8125 47.703125 
@@ -1362,7 +1384,7 @@ L 9.28125 54.6875
 L 9.28125 70.21875 
 z
 " id="DejaVuSans-116"></path>
-     <path d="M 18.109375 8.203125 
+      <path d="M 18.109375 8.203125 
 L 18.109375 -20.796875 
 L 9.078125 -20.796875 
 L 9.078125 54.6875 
@@ -1388,7 +1410,7 @@ Q 40.53125 6.109375 44.609375 11.75
 Q 48.6875 17.390625 48.6875 27.296875 
 z
 " id="DejaVuSans-112"></path>
-     <path d="M 9.421875 54.6875 
+      <path d="M 9.421875 54.6875 
 L 18.40625 54.6875 
 L 18.40625 0 
 L 9.421875 0 
@@ -1399,8 +1421,7 @@ L 18.40625 64.59375
 L 9.421875 64.59375 
 z
 " id="DejaVuSans-105"></path>
-    </defs>
-    <g style="fill:#ffffff;" transform="translate(155.135 43.192875)scale(0.12 -0.12)">
+     </defs>
      <use xlink:href="#DejaVuSans-78"></use>
      <use x="74.804688" xlink:href="#DejaVuSans-97"></use>
      <use x="136.083984" xlink:href="#DejaVuSans-109"></use>
@@ -1427,7 +1448,7 @@ z
   </g>
  </g>
  <defs>
-  <clippath id="p13d87deb40">
+  <clippath id="p12fe265023">
    <rect height="217.44" width="334.8" x="53.328125" y="49.192875"></rect>
   </clippath>
  </defs>
@@ -1479,7 +1500,7 @@ z
 
 <pre><code>    - Akin to NLP, we can treat each nucelotide like a token in a sentence.
     - Train an XLNet (with self-attention and all the rest) model with a linear head to predict presence (0/1) of motifs.
-    - This particular model is useful since we have somewhat lengthy instances for a transformer ($1500$-mers).</code></pre>
+    - This particular model is useful since we have somewhat lengthy instances for a transformer (1500-mers).</code></pre>
 
 </div>
 </div>
@@ -1559,9 +1580,8 @@ z
 <span class="sd">        """</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_encoding</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="k">if</span> <span class="n">encoding</span><span class="o">==</span><span class="s1">'one-hot'</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_encoding</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">transformer_checkpoint</span><span class="o">=</span><span class="n">transformer_checkpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="c1">#NOTE: we need this to be a float to accommodate nn.BCEWithLogitsLoss() later to match logit input.</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
@@ -1683,8 +1703,371 @@ Nucleotides -&gt; Integers
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Note that for the Transformer, I will be pulling an untrained model from Huggingface. That involves invoking the <code>config</code> of the desired model, but instantiating the model itself from the config only (<strong><em>not</em></strong> <code>from_pretrained</code>).</p>
-<p>As for the tokenizer, we don't really need the actual model's tokenizer with associated vocabulary, etc., since we can just map each nucleotide to an integer. This should be equivalent to character-level tokenization of each nucleotide with an untrained vocabulary, but also allows for the use of <code>nn.Embedding()</code> for the second CNN.</p>
+<h2 id="Model-Instantiation">
+<a class="anchor" href="#Model-Instantiation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Instantiation<a class="anchor-link" href="#Model-Instantiation"> </a>
+</h2>
+<p>We can now define models to be instantiated in the main Pytorch <code>LightningModule</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Basic-CNN">
+<a class="anchor" href="#Basic-CNN" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic CNN<a class="anchor-link" href="#Basic-CNN"> </a>
+</h3>
+<p>Again, we define a convolutional neural net on static, one-hot embedded nucleotides. For now, I will use a single 1-Dimensional Convolution layer (+ nonlinearity + flattening) and one dense (<code>linear</code> + activation) output layer. This model will make use of the <code>dm_onehot</code> data module defined and instantiated above.</p>
+<p>As you might remember from above, we one-hot encoded each sequence using a dictionay of nucleotides to integers, and then encoded a 4-channel NumPy binary array using the indices of this dictionary. When placed into the dataset class with a batch-size parameter, we can finally see what the network sees per "minibatch" of sequences. I say "minibatch" because technically each shuffled pass during a stochastic gradient descent epoch is commonly referred to as a batch.</p>
+<p>Please see <a href="https://colab.research.google.com/github/Avsecz/DL-genomics-exercise/blob/master/Simulated.ipynb#scrollTo=MYVEEl0zZwlr">https://colab.research.google.com/github/Avsecz/DL-genomics-exercise/blob/master/Simulated.ipynb#scrollTo=MYVEEl0zZwlr</a> for the Keras model I've based my implementation on.</p>
+<p>At any rate, the model views a tensor from the dataloader of the following shape (note this is also a nice way to access a sample instance from the dataloader directly):</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_onehot</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dm_onehot</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))[</span><span class="s1">'X'</span><span class="p">]</span>
+<span class="n">x_sample_onehot</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[[1., 1., 1.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 1., 0.],
+         [0., 0., 0.,  ..., 0., 0., 1.],
+         [0., 0., 0.,  ..., 1., 0., 0.]],
+
+        [[0., 0., 0.,  ..., 1., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 1.],
+         [1., 1., 0.,  ..., 0., 1., 0.],
+         [0., 0., 1.,  ..., 0., 0., 0.]],
+
+        [[0., 0., 0.,  ..., 0., 1., 1.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [1., 1., 1.,  ..., 1., 0., 0.]],
+
+        ...,
+
+        [[0., 0., 0.,  ..., 0., 1., 1.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [1., 1., 1.,  ..., 1., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]],
+
+        [[1., 0., 0.,  ..., 1., 1., 0.],
+         [0., 1., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 1.,  ..., 0., 0., 1.]],
+
+        [[0., 1., 0.,  ..., 0., 0., 1.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [1., 0., 1.,  ..., 1., 1., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_onehot</span><span class="o">.</span><span class="n">shape</span> <span class="c1">#batch_size, channels, length</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([64, 4, 1500])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, we have a fixed one-hot tensor of shape $(N,C,L)$, just like the Pytorch <code>nn.Conv1d</code> will expect. Note that we use $1$-D here since we have sequential data.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNACNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DNACNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span> <span class="c1"># -&gt; [64, 16, 1485]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveMaxPool1d</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span> <span class="c1">#-&gt; [64, 16, 16]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span> <span class="c1">#-&gt; [64,256]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># -&gt; [64,1] , a single logit output per instance.</span>
+            <span class="c1"># nn.Sigmoid() -&gt; no need for final activation since we will use nn.BCEWithLogitsLoss()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="CNN-with-Trainable-Embeddings">
+<a class="anchor" href="#CNN-with-Trainable-Embeddings" aria-hidden="true"><span class="octicon octicon-link"></span></a>CNN with Trainable Embeddings<a class="anchor-link" href="#CNN-with-Trainable-Embeddings"> </a>
+</h3>
+<p>Now, for the embedding case, I will essentially "recreate" a learnable one-hot embedding. That is, we can directly compare the outcome of a learnable <code>nn.embedding</code> versus a fixed one-hot vector per sequence minibatch by being creative with dimensions.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_int</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dm_int</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))[</span><span class="s1">'X'</span><span class="p">]</span>
+<span class="n">x_sample_int</span><span class="o">.</span><span class="n">shape</span> <span class="c1">#batch_size, channels, length</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([64, 1500])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_int_embedded</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_embeddings</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">)(</span><span class="n">x_sample_int</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1500</span><span class="p">)</span>
+<span class="n">x_sample_int_embedded</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([64, 4, 1500])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that this looks identical to the one-hot encoding. However, we can take a look at the values:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_int_embedded</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[[-0.5439,  0.9530, -1.0703,  ...,  0.2975, -0.5987,  1.4053],
+         [-0.5439,  0.9530, -1.0703,  ...,  0.1343,  0.3164,  0.6182],
+         [-0.5439,  0.9530, -1.0703,  ...,  0.9530, -1.0703, -0.9398],
+         [-2.1298, -0.2774,  0.7278,  ...,  0.2975, -0.5987,  1.4053]],
+
+        [[ 0.8382,  0.2975, -0.5987,  ...,  0.2975, -0.5987,  1.4053],
+         [-0.5439,  0.9530, -1.0703,  ...,  0.2975, -0.5987,  1.4053],
+         [ 0.2695,  0.1343,  0.3164,  ...,  0.9530, -1.0703, -0.9398],
+         [ 0.2695,  0.1343,  0.3164,  ..., -0.2774,  0.7278,  0.3751]],
+
+        [[ 0.2695,  0.1343,  0.3164,  ..., -0.2774,  0.7278,  0.3751],
+         [-0.5439,  0.9530, -1.0703,  ...,  0.9530, -1.0703, -0.9398],
+         [ 0.2695,  0.1343,  0.3164,  ...,  0.1343,  0.3164,  0.6182],
+         [ 0.8382,  0.2975, -0.5987,  ...,  0.9530, -1.0703, -0.9398]],
+
+        ...,
+
+        [[ 0.8382,  0.2975, -0.5987,  ...,  0.1343,  0.3164,  0.6182],
+         [-0.5439,  0.9530, -1.0703,  ..., -0.2774,  0.7278,  0.3751],
+         [ 0.2695,  0.1343,  0.3164,  ...,  0.1343,  0.3164,  0.6182],
+         [-0.5439,  0.9530, -1.0703,  ...,  0.9530, -1.0703, -0.9398]],
+
+        [[-0.5439,  0.9530, -1.0703,  ...,  0.2975, -0.5987,  1.4053],
+         [ 0.8382,  0.2975, -0.5987,  ...,  0.1343,  0.3164,  0.6182],
+         [ 0.8382,  0.2975, -0.5987,  ..., -0.2774,  0.7278,  0.3751],
+         [ 0.2695,  0.1343,  0.3164,  ...,  0.1343,  0.3164,  0.6182]],
+
+        [[ 0.8382,  0.2975, -0.5987,  ...,  0.1343,  0.3164,  0.6182],
+         [-0.5439,  0.9530, -1.0703,  ...,  0.9530, -1.0703, -0.9398],
+         [-2.1298, -0.2774,  0.7278,  ...,  0.2975, -0.5987,  1.4053],
+         [ 0.8382,  0.2975, -0.5987,  ...,  0.9530, -1.0703, -0.9398]]],
+       grad_fn=&lt;ViewBackward&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that the tensor is initially randomized float values. But, unlike the one-hot case, these values (this lookup table) will be <em>trained/adjusted during backpropagation</em>!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNACNNEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DNACNNEmbedding</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_embeddings</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span> <span class="c1"># -&gt; [64, 16, 1485]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveMaxPool1d</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span> <span class="c1">#-&gt; [64, 16, 16]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span> <span class="c1">#-&gt; [64,256]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># -&gt; [64,1] , a single logit output per instance.</span>
+            <span class="c1"># nn.Sigmoid() -&gt; no need for final activation since we will use nn.BCEWithLogitsLoss()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1500</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-DNA-Transformer!">
+<a class="anchor" href="#The-DNA-Transformer!" aria-hidden="true"><span class="octicon octicon-link"></span></a>The DNA Transformer!<a class="anchor-link" href="#The-DNA-Transformer!"> </a>
+</h3>
+<p>Let's create a class using HuggingFace within an nn.module.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that for the Transformer, I will be pulling an <em>untrained</em> model from Huggingface. That involves invoking the <code>config</code> of the desired model, but instantiating the model itself from the config only (<strong><em>not</em></strong> <code>from_pretrained</code>). I think this is actually quite annoying and could warrant a pull request at a future date (there ought to be a flag like <code>.from_untrained</code>).</p>
+<p>As for the tokenizer, we don't really need the actual model's tokenizer with associated vocabulary, etc., since we can just map each nucleotide to an integer. This should be equivalent to character-level tokenization of each nucleotide with an untrained vocabulary, but also allowed for the use of <code>nn.Embedding()</code> for the second CNN (detailed above).</p>
 <p>For illustrative purposes:</p>
 
 </div>
@@ -1900,8 +2283,8 @@ Nucleotides -&gt; Integers
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The transformer model is currently instantiated for classification (<code>model.logits_proj</code> has <code>out_features=2</code>). Note that we will need to take some form of activation across these logits (sigmoid, or even plain argmax). We can use <code>BCEWithLogits</code> (binary cross entropy with logits) to accomplish this.</p>
 <p>Note due to the nature of binary (versus multlabel) classification, that we could instead have a <em>single</em> neuron output and use sigmoidal activation (analagous to logistic regression).</p>
-<p>The key difference here is that a single neuronal output will evaluate the probability of a single output together, rather than the probability of each class independently. By keeping the output dimensions as $2$, we gain a small amount out of the network (each output gets its own weight) that would be implicit otherwise.</p>
-<p>However, the dimensions of the label space need to pairwise match. Since labels are currently set up in the dataset with cardinality of 1, I will instead just refactor the model slightly to have a single output dimension. It's not terribly clear what the advantage in this toy example would be to changing or keeping the architecture, at any rate.</p>
+<p>The key difference here is that a single neuronal output will evaluate the probability of a single output together, rather than the probability of each class independently. By keeping the output dimensions as $2$, we may gain a small amount out capacity of the network (each output gets its own weight) that would be implicit otherwise. More formally, the VC dimension of a parameter-rich network is greater, however small.</p>
+<p>Still, the dimensions of the label space need to pairwise match. Since labels are currently set up in the dataset with cardinality of 1 (scalar, versus a one-hot or other label encoding of its own), I will instead just refactor the model slightly to have a single output dimension. It's not clear what the advantage in this toy example would be to changing or keeping this tiny aspect of the architecture would be, at any rate.</p>
 
 </div>
 </div>
@@ -1944,6 +2327,7 @@ Nucleotides -&gt; Integers
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Perfect! This will be incorporated below.</p>
+<p>In short, this step allows us to create a black-box network while keeping all of the business of training each of these three models as similar as possible (same loss, same <code>LightningModule</code>, etc., and I'm sure there are even more concise methods).</p>
 
 </div>
 </div>
@@ -1955,48 +2339,54 @@ Nucleotides -&gt; Integers
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNACNNEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DNACNNEmbedding</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-<span class="k">class</span> <span class="nc">DNACNNEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-<span class="k">class</span> <span class="nc">DNATransformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNATransformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">transformer_checkpoint</span><span class="o">=</span><span class="s1">'xlnet-base-cased'</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DNATransformer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
         <span class="c1">#Load untrained model using checkpointed config.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">=</span><span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">transformer_checkpoint</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">transformer_checkpoint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">logits_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">768</span><span class="p">,</span><span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
 
-<span class="k">class</span> <span class="nc">DNALitModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    </div>
+</div>
+</div>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">net</span><span class="p">:</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Integration:-The-Training-Module">
+<a class="anchor" href="#Integration:-The-Training-Module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Integration: The Training Module<a class="anchor-link" href="#Integration:-The-Training-Module"> </a>
+</h3>
+<p>Now, the three models defined above are ready to be invoked into during train, test, and inference. We can organize this under a <code>LightningModule</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNALitModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">net</span><span class="p">:</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">net</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span> <span class="c1">#Sigmoid--&gt;BCE Loss.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span> <span class="c1">#Sigmoid--&gt;BCE Loss included.</span>
 
     <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
         <span class="c1"># --------------------------</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">'X'</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#take the most probable index.</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'train_loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
@@ -2005,7 +2395,7 @@ Nucleotides -&gt; Integers
 
     <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
         <span class="c1"># --------------------------</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">'X'</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'val_loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
@@ -2013,7 +2403,7 @@ Nucleotides -&gt; Integers
 
     <span class="k">def</span> <span class="nf">test_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
         <span class="c1"># --------------------------</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">'X'</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'test_loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
@@ -2022,6 +2412,262 @@ Nucleotides -&gt; Integers
     <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">optimizer</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Training">
+<a class="anchor" href="#Training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training<a class="anchor-link" href="#Training"> </a>
+</h2>
+<p>We are now ready to train the selection of models.</p>
+<ul>
+<li>
+<p>Datamodules ✔️</p>
+</li>
+<li>
+<p>CNN ✔️</p>
+</li>
+<li>
+<p>CNN with Embeddings ✔️</p>
+</li>
+<li>
+<p>Transformer ✔️</p>
+</li>
+</ul>
+<p>Time to train!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cnn_dm</span> <span class="o">=</span> <span class="n">dm_onehot</span>
+<span class="n">cnn_emb_dm</span> <span class="o">=</span> <span class="n">transformer_dm</span> <span class="o">=</span> <span class="n">dm_int</span>
+
+<span class="n">dna_cnn</span> <span class="o">=</span> <span class="n">DNALitModule</span><span class="p">(</span><span class="n">DNACNN</span><span class="p">())</span>
+<span class="n">dna_cnn_emb</span> <span class="o">=</span> <span class="n">DNALitModule</span><span class="p">(</span><span class="n">DNACNNEmbedding</span><span class="p">())</span>
+<span class="n">dna_transformer</span> <span class="o">=</span> <span class="n">DNALitModule</span><span class="p">(</span><span class="n">DNATransformer</span><span class="p">())</span>
+
+<span class="n">trainer_cnn</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">fast_dev_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">trainer_cnn_emb</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">fast_dev_run</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">trainer_transformer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">fast_dev_run</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>GPU available: False, used: False
+TPU available: None, using: 0 TPU cores
+GPU available: False, used: False
+TPU available: None, using: 0 TPU cores
+Running in fast_dev_run mode: will run a full train, val and test loop using 1 batch(es).
+GPU available: False, used: False
+TPU available: None, using: 0 TPU cores
+Running in fast_dev_run mode: will run a full train, val and test loop using 1 batch(es).
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">trainer_cnn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">dna_cnn</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">cnn_dm</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+  | Name      | Type              | Params
+------------------------------------------------
+0 | net       | DNACNN            | 1.3 K 
+1 | criterion | BCEWithLogitsLoss | 0     
+------------------------------------------------
+1.3 K     Trainable params
+0         Non-trainable params
+1.3 K     Total params
+0.005     Total estimated model params size (MB)
+Epoch 0:  50%|█████     | 63/126 [00:01&lt;00:01, 42.32it/s, loss=0.69, v_num=1]
+Validating: 0it [00:00, ?it/s]
+Epoch 0:  52%|█████▏    | 66/126 [00:01&lt;00:01, 43.63it/s, loss=0.69, v_num=1]
+Epoch 0:  63%|██████▎   | 80/126 [00:01&lt;00:00, 49.41it/s, loss=0.69, v_num=1]
+Epoch 0:  75%|███████▍  | 94/126 [00:01&lt;00:00, 54.36it/s, loss=0.69, v_num=1]
+Epoch 0:  86%|████████▌ | 108/126 [00:01&lt;00:00, 58.70it/s, loss=0.69, v_num=1]
+Epoch 0: 100%|██████████| 126/126 [00:01&lt;00:00, 63.27it/s, loss=0.69, v_num=1]
+Epoch 1:  50%|█████     | 63/126 [00:01&lt;00:01, 45.53it/s, loss=0.668, v_num=1]
+Validating: 0it [00:00, ?it/s]
+Epoch 1:  56%|█████▌    | 70/126 [00:01&lt;00:01, 48.68it/s, loss=0.668, v_num=1]
+Epoch 1:  67%|██████▋   | 84/126 [00:01&lt;00:00, 54.44it/s, loss=0.668, v_num=1]
+Epoch 1:  78%|███████▊  | 98/126 [00:01&lt;00:00, 59.63it/s, loss=0.668, v_num=1]
+Epoch 1:  89%|████████▉ | 112/126 [00:01&lt;00:00, 64.24it/s, loss=0.668, v_num=1]
+Epoch 1: 100%|██████████| 126/126 [00:01&lt;00:00, 68.06it/s, loss=0.668, v_num=1]
+Epoch 2:  50%|█████     | 63/126 [00:01&lt;00:01, 45.90it/s, loss=0.589, v_num=1]
+Validating: 0it [00:00, ?it/s]
+Epoch 2:  56%|█████▌    | 70/126 [00:01&lt;00:01, 48.99it/s, loss=0.589, v_num=1]
+Epoch 2:  67%|██████▋   | 84/126 [00:01&lt;00:00, 54.41it/s, loss=0.589, v_num=1]
+Epoch 2:  79%|███████▊  | 99/126 [00:01&lt;00:00, 60.01it/s, loss=0.589, v_num=1]
+Epoch 2:  90%|█████████ | 114/126 [00:01&lt;00:00, 64.53it/s, loss=0.589, v_num=1]
+Epoch 2: 100%|██████████| 126/126 [00:01&lt;00:00, 67.76it/s, loss=0.589, v_num=1]
+Epoch 3:  50%|█████     | 63/126 [00:01&lt;00:01, 45.79it/s, loss=0.446, v_num=1]
+Validating: 0it [00:00, ?it/s]
+Epoch 3:  60%|█████▉    | 75/126 [00:01&lt;00:00, 51.36it/s, loss=0.446, v_num=1]
+Epoch 3:  71%|███████▏  | 90/126 [00:01&lt;00:00, 57.56it/s, loss=0.446, v_num=1]
+Epoch 3:  83%|████████▎ | 105/126 [00:01&lt;00:00, 63.06it/s, loss=0.446, v_num=1]
+Epoch 3:  95%|█████████▌| 120/126 [00:01&lt;00:00, 67.88it/s, loss=0.446, v_num=1]
+Epoch 3: 100%|██████████| 126/126 [00:01&lt;00:00, 69.30it/s, loss=0.446, v_num=1]
+Epoch 4:  50%|█████     | 63/126 [00:01&lt;00:01, 46.00it/s, loss=0.318, v_num=1]
+Validating: 0it [00:00, ?it/s]
+Epoch 4:  60%|█████▉    | 75/126 [00:01&lt;00:00, 51.07it/s, loss=0.318, v_num=1]
+Validating:  19%|█▉        | 12/63 [00:00&lt;00:00, 119.02it/s]
+Epoch 4:  71%|███████▏  | 90/126 [00:01&lt;00:00, 56.62it/s, loss=0.318, v_num=1]
+Epoch 4:  83%|████████▎ | 105/126 [00:01&lt;00:00, 61.55it/s, loss=0.318, v_num=1]
+Epoch 4: 100%|██████████| 126/126 [00:01&lt;00:00, 67.25it/s, loss=0.318, v_num=1]
+Epoch 4: 100%|██████████| 126/126 [00:01&lt;00:00, 67.01it/s, loss=0.318, v_num=1]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">trainer_cnn_emb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">dna_cnn_emb</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">cnn_emb_dm</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+  | Name      | Type              | Params
+------------------------------------------------
+0 | net       | DNACNNEmbedding   | 1.6 K 
+1 | criterion | BCEWithLogitsLoss | 0     
+------------------------------------------------
+1.6 K     Trainable params
+0         Non-trainable params
+1.6 K     Total params
+0.006     Total estimated model params size (MB)
+Epoch 0:  50%|█████     | 1/2 [00:00&lt;00:00,  4.71it/s, loss=0.709]
+Validating: 0it [00:00, ?it/s]
+Epoch 0: 100%|██████████| 2/2 [00:00&lt;00:00,  8.76it/s, loss=0.709]
+Epoch 0: 100%|██████████| 2/2 [00:00&lt;00:00,  8.63it/s, loss=0.709]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These models range in complexity greatly, and my hope is this will serve as a future-proof skeleton for a number of implementations. Other variants of CNNs, RNNs, and other Pytorch objects should be facile to swap and implement, and HuggingFace will likely serve as a choice deep NLP API for some time.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># model = AutoModelForSequenceClassification.from_config(config)</span>
+<span class="c1"># model.logits_proj = nn.Linear(in_features=768,out_features=1,bias=True)</span>
 </pre></div>
 
     </div>
