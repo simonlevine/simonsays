@@ -3118,7 +3118,7 @@ Epoch 24: 100%|██████████| 78/78 [00:00&lt;00:00, 236.67it/s
 <h2 id="Removing-Irrelevant-Features-for-Supervised-Learning">
 <a class="anchor" href="#Removing-Irrelevant-Features-for-Supervised-Learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Removing Irrelevant Features for Supervised Learning<a class="anchor-link" href="#Removing-Irrelevant-Features-for-Supervised-Learning"> </a>
 </h2>
-<p>This is an analaous case to Linear Discriminant Analysis (LDA)<sup class="footnote-ref" id="fnref-1"><a href="#fn-1">1</a></sup>, in that we use the feature-target relationship to select only those features relevant to a target vector using a Chi-square ($\chi^2$) test for independence or an ANOVA (analysis of variance; for $\vec{x} \in \mathbb{R}$). In this fashion, we remove features that do not result in dignificant mean differences. This is not a classifier per se, but rather an intuitive method of eliminating features unlikely to be helpful in supervised settings.</p>
+<p>This is an analaous case to Linear Discriminant Analysis (LDA)<sup class="footnote-ref" id="fnref-1"><a href="#fn-1">1</a></sup>, in that we use the feature-target relationship to select only those features relevant to a target vector using a Chi-square ($\chi^2$) test for independence or an ANOVA (analysis of variance; for $\vec{x} \in \mathbb{R}$). In this fashion, we remove features that do not result in significant mean differences. This is not a classifier per se, but rather an intuitive method of eliminating features unlikely to be helpful in supervised settings.</p>
 <div class="footnotes">
 <hr>
 <ol>
@@ -3370,7 +3370,7 @@ Epoch 24: 100%|██████████| 78/78 [00:00&lt;00:00, 236.67it/s
 <h3 id="ANOVA-Reduction-of-Features">
 <a class="anchor" href="#ANOVA-Reduction-of-Features" aria-hidden="true"><span class="octicon octicon-link"></span></a>ANOVA Reduction of Features<a class="anchor-link" href="#ANOVA-Reduction-of-Features"> </a>
 </h3>
-<p>Now, for the continous-valued features, we can compute the ANOVA F-score between $X$ and $y$ and select the $k$-best similarly. Note that we could proceed with <code>f_regression</code> for continuous-valued features.</p>
+<p>Now, for the continous-valued features, we can compute the ANOVA F-score between $X$ and $y$ and select the $k$-best similarly. Note that we could proceed with <code>f_regression</code> for continuous-valued labels.</p>
 <p>In any case, we use ANOVA, a generalization of the Student's $t$-test from $2$ to $n$ means. We compute this by providing features as a set of regressors to be tested in sequence, such that we compute the $F$ statistic where $F=\frac{\sigma^2_X}{\sigma^2_y}$, the ratio of the <em>sample</em> variances of the features and the target. This is the same as a ratio of $\frac{\text{explained variance}}{\text{unexplained variance}}$. Under the null hypothesis, we expect the value of $F$ to have an $F$-distribution. In other words, we can find dependence of $y$ on $X$, and as such use those features going forward.</p>
 
 </div>
