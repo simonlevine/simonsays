@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Background | Simon Says</title>
+<title>Purines, Pyrimidines, and Convolutional Neural Networks | Simon Says</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Background" />
+<meta property="og:title" content="Purines, Pyrimidines, and Convolutional Neural Networks" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Tutorials and Musings." />
-<meta property="og:description" content="Tutorials and Musings." />
-<link rel="canonical" href="https://simonlevine.github.io/simonsays/2021/02/17/DNA_CNN.html" />
-<meta property="og:url" content="https://simonlevine.github.io/simonsays/2021/02/17/DNA_CNN.html" />
+<meta name="description" content="A sketch of CNNs for homotypic motif density localization (finding clusters of the same type of sequence motif)." />
+<meta property="og:description" content="A sketch of CNNs for homotypic motif density localization (finding clusters of the same type of sequence motif)." />
+<link rel="canonical" href="https://simonlevine.github.io/simonsays/jupyter/2021/02/17/DNA_CNN.html" />
+<meta property="og:url" content="https://simonlevine.github.io/simonsays/jupyter/2021/02/17/DNA_CNN.html" />
 <meta property="og:site_name" content="Simon Says" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-02-17T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://simonlevine.github.io/simonsays/2021/02/17/DNA_CNN.html","@type":"BlogPosting","headline":"Background","dateModified":"2021-02-17T00:00:00-06:00","datePublished":"2021-02-17T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlevine.github.io/simonsays/2021/02/17/DNA_CNN.html"},"description":"Tutorials and Musings.","@context":"https://schema.org"}</script>
+{"url":"https://simonlevine.github.io/simonsays/jupyter/2021/02/17/DNA_CNN.html","@type":"BlogPosting","headline":"Purines, Pyrimidines, and Convolutional Neural Networks","dateModified":"2021-02-17T00:00:00-06:00","datePublished":"2021-02-17T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlevine.github.io/simonsays/jupyter/2021/02/17/DNA_CNN.html"},"description":"A sketch of CNNs for homotypic motif density localization (finding clusters of the same type of sequence motif).","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/simonsays/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://simonlevine.github.io/simonsays/feed.xml" title="Simon Says" /><link rel="shortcut icon" type="image/x-icon" href="/simonsays/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,16 +87,23 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Background</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-17T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Purines, Pyrimidines, and Convolutional Neural Networks</h1><p class="page-description">A sketch of CNNs for homotypic motif density localization (finding clusters of the same type of sequence motif).</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-17T00:00:00-06:00" itemprop="datePublished">
         Feb 17, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      17 min read
+      19 min read
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/simonsays/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
     
 
     
@@ -124,7 +131,28 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Background">Background </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Biology">Biology </a></li>
+<li class="toc-entry toc-h2"><a href="#Dataset">Dataset </a></li>
+<li class="toc-entry toc-h2"><a href="#Machine-Learning">Machine Learning </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Task:">Task: </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Model-Instantiation">Model Instantiation </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Basic-CNN">Basic CNN </a></li>
+<li class="toc-entry toc-h3"><a href="#CNN-with-Trainable-Embeddings">CNN with Trainable Embeddings </a></li>
+<li class="toc-entry toc-h3"><a href="#The-DNA-Transformer!">The DNA Transformer! </a></li>
+<li class="toc-entry toc-h3"><a href="#Integration:-The-Training-Module">Integration: The Training Module </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Training">Training </a></li>
+</ul>
+</li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -133,16 +161,21 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Purines, Pyrimidines, and Convolutional Neural Networks</p>
-<blockquote><p>A sketch of CNNs for homotypic motif density localization (finding clusters of the same type of sequence motif).</p>
-</blockquote>
-<ul>
-<li>toc:true - badges: true</li>
-<li>comments: true</li>
-<li>categories: [jupyter]</li>
-</ul>
+<h1 id="Background">
+<a class="anchor" href="#Background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background<a class="anchor-link" href="#Background"> </a>
+</h1>
+<p><em>This notebook is adapted from the CS-185, Spring 2021 course at Brown University</em> (<a href="http://cs.brown.edu/courses/csci1850">http://cs.brown.edu/courses/csci1850</a>)</p>
+<h2 id="Biology">
+<a class="anchor" href="#Biology" aria-hidden="true"><span class="octicon octicon-link"></span></a>Biology<a class="anchor-link" href="#Biology"> </a>
+</h2>
+<p>Transcription Factors (TFs) are an important class of protein that bind to sections of DNA. This binding process is mediated by their propensity to attach to particular sequence motifs, or patterns in the DNA sequence. Often, we humans refer to binding as important regulatory regions, as associated transcription factors play a large role in upregulating and/or downregulating sequence transcription. In other words, finding the location of such motifs on a given sequence allows us to glean a functional understanding from structure alone. If an algorithm can be trained to detect relevant motifs given a cluster with high fidelity, then the algorithm could obviate hand-tuned feature identification, and even predict likely TF binding sites from unknown sequences. In fact, this is the exact problem we will solve in this exercise.</p>
+<h2 id="Dataset">
+<a class="anchor" href="#Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataset<a class="anchor-link" href="#Dataset"> </a>
+</h2>
+<p>The small dataset provided actually is <em>simulated</em> homotypic motif density localization data. For more about how to generate such data, see the Kundaje Lab's DragoNN (<a href="http://kundajelab.github.io/dragonn/">http://kundajelab.github.io/dragonn/</a>), and if you want, try to beat their results with, perhaps, the GAN from my previous post 😉. The nice thing about this dataset is that it is already formatted for easy loading. Each "sequence" is actually a $1500-mer$, and, given their <em>in silico</em> provenance, we can assume 🌟 perfect coverage 🌟 and 🌸 no sequencing errors 🌸 for the purpose of this exercise. We can take a peek at the training split below.</p>
 
 </div>
 </div>
@@ -173,10 +206,10 @@ window.onload = wrap_img;
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_dna_cnn/hw1_data.npz&#39;</span><span class="p">)</span>
-<span class="n">train_seq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;train_seq&#39;</span><span class="p">]</span>
-<span class="n">train_y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;train_y&#39;</span><span class="p">]</span>
-<span class="n">train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">train_seq</span><span class="p">,</span><span class="n">train_y</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">])))</span>
+<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'./data_dna_cnn/hw1_data.npz'</span><span class="p">)</span>
+<span class="n">train_seq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'train_seq'</span><span class="p">]</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'train_y'</span><span class="p">]</span>
+<span class="n">train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">train_seq</span><span class="p">,</span><span class="n">train_y</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="s1">'X'</span><span class="p">,</span><span class="s1">'y'</span><span class="p">])))</span>
 <span class="n">train_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -318,8 +351,8 @@ window.onload = wrap_img;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">)</span>
-<span class="n">train_df</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">train_df</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">'dark_background'</span><span class="p">)</span>
+<span class="n">train_df</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">'hist'</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">train_df</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -334,7 +367,7 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;AxesSubplot:title={&#39;center&#39;:&#39;True     2010\nFalse    1990\nName: y, dtype: int64&#39;}, ylabel=&#39;Frequency&#39;&gt;</pre>
+<pre>&lt;AxesSubplot:title={'center':'True     2010\nFalse    1990\nName: y, dtype: int64'}, ylabel='Frequency'&gt;</pre>
 </div>
 
 </div>
@@ -347,20 +380,20 @@ window.onload = wrap_img;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 <!-- Created with matplotlib (https://matplotlib.org/) -->
-<svg height="290.511pt" version="1.1" viewBox="0 0 395.328125 290.511" width="395.328125pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="290.511pt" version="1.1" viewbox="0 0 395.328125 290.511" width="395.328125pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
  <metadata>
-  <rdf:RDF xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-   <cc:Work>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-    <dc:date>2021-03-04T22:10:30.203093</dc:date>
-    <dc:format>image/svg+xml</dc:format>
-    <dc:creator>
-     <cc:Agent>
-      <dc:title>Matplotlib v3.3.2, https://matplotlib.org/</dc:title>
-     </cc:Agent>
-    </dc:creator>
-   </cc:Work>
-  </rdf:RDF>
+  <rdf xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <work>
+    <type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></type>
+    <date>2021-03-04T22:10:30.203093</date>
+    <format>image/svg+xml</format>
+    <creator>
+     <agent>
+      <title>Matplotlib v3.3.2, https://matplotlib.org/</title>
+     </agent>
+    </creator>
+   </work>
+  </rdf>
  </metadata>
  <defs>
   <style type="text/css">*{stroke-linecap:butt;stroke-linejoin:round;}</style>
@@ -372,7 +405,7 @@ L 395.328125 290.511
 L 395.328125 0 
 L 0 0 
 z
-" />
+"></path>
   </g>
   <g id="axes_1">
    <g id="patch_2">
@@ -381,7 +414,7 @@ L 388.128125 266.632875
 L 388.128125 49.192875 
 L 53.328125 49.192875 
 z
-" />
+"></path>
    </g>
    <g id="patch_3">
     <path clip-path="url(#pd2930dcf78)" d="M 68.546307 266.632875 
@@ -389,7 +422,7 @@ L 98.98267 266.632875
 L 98.98267 61.607715 
 L 68.546307 61.607715 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_4">
     <path clip-path="url(#pd2930dcf78)" d="M 98.98267 266.632875 
@@ -397,7 +430,7 @@ L 129.419034 266.632875
 L 129.419034 266.632875 
 L 98.98267 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_5">
     <path clip-path="url(#pd2930dcf78)" d="M 129.419034 266.632875 
@@ -405,7 +438,7 @@ L 159.855398 266.632875
 L 159.855398 266.632875 
 L 129.419034 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_6">
     <path clip-path="url(#pd2930dcf78)" d="M 159.855398 266.632875 
@@ -413,7 +446,7 @@ L 190.291761 266.632875
 L 190.291761 266.632875 
 L 159.855398 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_7">
     <path clip-path="url(#pd2930dcf78)" d="M 190.291761 266.632875 
@@ -421,7 +454,7 @@ L 220.728125 266.632875
 L 220.728125 266.632875 
 L 190.291761 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_8">
     <path clip-path="url(#pd2930dcf78)" d="M 220.728125 266.632875 
@@ -429,7 +462,7 @@ L 251.164489 266.632875
 L 251.164489 266.632875 
 L 220.728125 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_9">
     <path clip-path="url(#pd2930dcf78)" d="M 251.164489 266.632875 
@@ -437,7 +470,7 @@ L 281.600852 266.632875
 L 281.600852 266.632875 
 L 251.164489 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_10">
     <path clip-path="url(#pd2930dcf78)" d="M 281.600852 266.632875 
@@ -445,7 +478,7 @@ L 312.037216 266.632875
 L 312.037216 266.632875 
 L 281.600852 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_11">
     <path clip-path="url(#pd2930dcf78)" d="M 312.037216 266.632875 
@@ -453,7 +486,7 @@ L 342.47358 266.632875
 L 342.47358 266.632875 
 L 312.037216 266.632875 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="patch_12">
     <path clip-path="url(#pd2930dcf78)" d="M 342.47358 266.632875 
@@ -461,7 +494,7 @@ L 372.909943 266.632875
 L 372.909943 59.547161 
 L 342.47358 59.547161 
 z
-" style="fill:#8dd3c7;" />
+" style="fill:#8dd3c7;"></path>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -469,10 +502,10 @@ z
       <defs>
        <path d="M 0 0 
 L 0 3.5 
-" id="m828455bf53" style="stroke:#ffffff;stroke-width:0.8;" />
+" id="m828455bf53" style="stroke:#ffffff;stroke-width:0.8;"></path>
       </defs>
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="68.546307" xlink:href="#m828455bf53" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="68.546307" xlink:href="#m828455bf53" y="266.632875"></use>
       </g>
      </g>
      <g id="text_1">
@@ -499,24 +532,24 @@ Q 6.59375 17.96875 6.59375 36.375
 Q 6.59375 54.828125 13.0625 64.515625 
 Q 19.53125 74.21875 31.78125 74.21875 
 z
-" id="DejaVuSans-48" />
+" id="DejaVuSans-48"></path>
         <path d="M 10.6875 12.40625 
 L 21 12.40625 
 L 21 0 
 L 10.6875 0 
 z
-" id="DejaVuSans-46" />
+" id="DejaVuSans-46"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-48" />
-       <use x="63.623047" xlink:href="#DejaVuSans-46" />
-       <use x="95.410156" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-48"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
+       <use x="95.410156" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="129.419034" xlink:href="#m828455bf53" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="129.419034" xlink:href="#m828455bf53" y="266.632875"></use>
       </g>
      </g>
      <g id="text_2">
@@ -546,18 +579,18 @@ Q 49.859375 40.875 45.40625 35.40625
 Q 44.1875 33.984375 37.640625 27.21875 
 Q 31.109375 20.453125 19.1875 8.296875 
 z
-" id="DejaVuSans-50" />
+" id="DejaVuSans-50"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-48" />
-       <use x="63.623047" xlink:href="#DejaVuSans-46" />
-       <use x="95.410156" xlink:href="#DejaVuSans-50" />
+       <use xlink:href="#DejaVuSans-48"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
+       <use x="95.410156" xlink:href="#DejaVuSans-50"></use>
       </g>
      </g>
     </g>
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="190.291761" xlink:href="#m828455bf53" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="190.291761" xlink:href="#m828455bf53" y="266.632875"></use>
       </g>
      </g>
      <g id="text_3">
@@ -580,18 +613,18 @@ L 37.796875 17.1875
 L 4.890625 17.1875 
 L 4.890625 26.703125 
 z
-" id="DejaVuSans-52" />
+" id="DejaVuSans-52"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-48" />
-       <use x="63.623047" xlink:href="#DejaVuSans-46" />
-       <use x="95.410156" xlink:href="#DejaVuSans-52" />
+       <use xlink:href="#DejaVuSans-48"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
+       <use x="95.410156" xlink:href="#DejaVuSans-52"></use>
       </g>
      </g>
     </g>
     <g id="xtick_4">
      <g id="line2d_4">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="251.164489" xlink:href="#m828455bf53" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="251.164489" xlink:href="#m828455bf53" y="266.632875"></use>
       </g>
      </g>
      <g id="text_4">
@@ -627,18 +660,18 @@ Q 23.390625 74.21875 37.203125 74.21875
 Q 40.921875 74.21875 44.703125 73.484375 
 Q 48.484375 72.75 52.59375 71.296875 
 z
-" id="DejaVuSans-54" />
+" id="DejaVuSans-54"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-48" />
-       <use x="63.623047" xlink:href="#DejaVuSans-46" />
-       <use x="95.410156" xlink:href="#DejaVuSans-54" />
+       <use xlink:href="#DejaVuSans-48"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
+       <use x="95.410156" xlink:href="#DejaVuSans-54"></use>
       </g>
      </g>
     </g>
     <g id="xtick_5">
      <g id="line2d_5">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="312.037216" xlink:href="#m828455bf53" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="312.037216" xlink:href="#m828455bf53" y="266.632875"></use>
       </g>
      </g>
      <g id="text_5">
@@ -683,18 +716,18 @@ Q 38.140625 66.40625 31.78125 66.40625
 Q 25.390625 66.40625 21.84375 63.234375 
 Q 18.3125 60.0625 18.3125 54.390625 
 z
-" id="DejaVuSans-56" />
+" id="DejaVuSans-56"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-48" />
-       <use x="63.623047" xlink:href="#DejaVuSans-46" />
-       <use x="95.410156" xlink:href="#DejaVuSans-56" />
+       <use xlink:href="#DejaVuSans-48"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
+       <use x="95.410156" xlink:href="#DejaVuSans-56"></use>
       </g>
      </g>
     </g>
     <g id="xtick_6">
      <g id="line2d_6">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="372.909943" xlink:href="#m828455bf53" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="372.909943" xlink:href="#m828455bf53" y="266.632875"></use>
       </g>
      </g>
      <g id="text_6">
@@ -713,11 +746,11 @@ L 54.390625 8.296875
 L 54.390625 0 
 L 12.40625 0 
 z
-" id="DejaVuSans-49" />
+" id="DejaVuSans-49"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-49" />
-       <use x="63.623047" xlink:href="#DejaVuSans-46" />
-       <use x="95.410156" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-49"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-46"></use>
+       <use x="95.410156" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
@@ -728,23 +761,23 @@ z
       <defs>
        <path d="M 0 0 
 L -3.5 0 
-" id="mfd057a6c63" style="stroke:#ffffff;stroke-width:0.8;" />
+" id="mfd057a6c63" style="stroke:#ffffff;stroke-width:0.8;"></path>
       </defs>
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="266.632875" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="266.632875"></use>
       </g>
      </g>
      <g id="text_7">
       <!-- 0 -->
       <g style="fill:#ffffff;" transform="translate(39.965625 270.432094)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_2">
      <g id="line2d_8">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="240.875945" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="240.875945"></use>
       </g>
      </g>
      <g id="text_8">
@@ -774,33 +807,33 @@ Q 35.15625 39.890625 26.703125 39.890625
 Q 22.75 39.890625 18.8125 39.015625 
 Q 14.890625 38.140625 10.796875 36.28125 
 z
-" id="DejaVuSans-53" />
+" id="DejaVuSans-53"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-50" />
-       <use x="63.623047" xlink:href="#DejaVuSans-53" />
-       <use x="127.246094" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-50"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-53"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_3">
      <g id="line2d_9">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="215.119016" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="215.119016"></use>
       </g>
      </g>
      <g id="text_9">
       <!-- 500 -->
       <g style="fill:#ffffff;" transform="translate(27.240625 218.918234)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-53" />
-       <use x="63.623047" xlink:href="#DejaVuSans-48" />
-       <use x="127.246094" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-53"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-48"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_4">
      <g id="line2d_10">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="189.362086" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="189.362086"></use>
       </g>
      </g>
      <g id="text_10">
@@ -815,91 +848,91 @@ L 18.3125 0
 L 43.21875 64.59375 
 L 8.203125 64.59375 
 z
-" id="DejaVuSans-55" />
+" id="DejaVuSans-55"></path>
        </defs>
-       <use xlink:href="#DejaVuSans-55" />
-       <use x="63.623047" xlink:href="#DejaVuSans-53" />
-       <use x="127.246094" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-55"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-53"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_5">
      <g id="line2d_11">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="163.605156" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="163.605156"></use>
       </g>
      </g>
      <g id="text_11">
       <!-- 1000 -->
       <g style="fill:#ffffff;" transform="translate(20.878125 167.404375)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-49" />
-       <use x="63.623047" xlink:href="#DejaVuSans-48" />
-       <use x="127.246094" xlink:href="#DejaVuSans-48" />
-       <use x="190.869141" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-49"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-48"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
+       <use x="190.869141" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_6">
      <g id="line2d_12">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="137.848227" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="137.848227"></use>
       </g>
      </g>
      <g id="text_12">
       <!-- 1250 -->
       <g style="fill:#ffffff;" transform="translate(20.878125 141.647446)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-49" />
-       <use x="63.623047" xlink:href="#DejaVuSans-50" />
-       <use x="127.246094" xlink:href="#DejaVuSans-53" />
-       <use x="190.869141" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-49"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-50"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-53"></use>
+       <use x="190.869141" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_7">
      <g id="line2d_13">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="112.091297" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="112.091297"></use>
       </g>
      </g>
      <g id="text_13">
       <!-- 1500 -->
       <g style="fill:#ffffff;" transform="translate(20.878125 115.890516)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-49" />
-       <use x="63.623047" xlink:href="#DejaVuSans-53" />
-       <use x="127.246094" xlink:href="#DejaVuSans-48" />
-       <use x="190.869141" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-49"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-53"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
+       <use x="190.869141" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_8">
      <g id="line2d_14">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="86.334368" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="86.334368"></use>
       </g>
      </g>
      <g id="text_14">
       <!-- 1750 -->
       <g style="fill:#ffffff;" transform="translate(20.878125 90.133586)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-49" />
-       <use x="63.623047" xlink:href="#DejaVuSans-55" />
-       <use x="127.246094" xlink:href="#DejaVuSans-53" />
-       <use x="190.869141" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-49"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-55"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-53"></use>
+       <use x="190.869141" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
     <g id="ytick_9">
      <g id="line2d_15">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="60.577438" />
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="53.328125" xlink:href="#mfd057a6c63" y="60.577438"></use>
       </g>
      </g>
      <g id="text_15">
       <!-- 2000 -->
       <g style="fill:#ffffff;" transform="translate(20.878125 64.376657)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-50" />
-       <use x="63.623047" xlink:href="#DejaVuSans-48" />
-       <use x="127.246094" xlink:href="#DejaVuSans-48" />
-       <use x="190.869141" xlink:href="#DejaVuSans-48" />
+       <use xlink:href="#DejaVuSans-50"></use>
+       <use x="63.623047" xlink:href="#DejaVuSans-48"></use>
+       <use x="127.246094" xlink:href="#DejaVuSans-48"></use>
+       <use x="190.869141" xlink:href="#DejaVuSans-48"></use>
       </g>
      </g>
     </g>
@@ -918,7 +951,7 @@ L 19.671875 34.8125
 L 19.671875 0 
 L 9.8125 0 
 z
-" id="DejaVuSans-70" />
+" id="DejaVuSans-70"></path>
        <path d="M 41.109375 46.296875 
 Q 39.59375 47.171875 37.8125 47.578125 
 Q 36.03125 48 33.890625 48 
@@ -934,7 +967,7 @@ Q 30.03125 56 36.53125 56
 Q 37.453125 56 38.578125 55.875 
 Q 39.703125 55.765625 41.0625 55.515625 
 z
-" id="DejaVuSans-114" />
+" id="DejaVuSans-114"></path>
        <path d="M 56.203125 29.59375 
 L 56.203125 25.203125 
 L 14.890625 25.203125 
@@ -958,7 +991,7 @@ Q 39.0625 48.390625 32.421875 48.390625
 Q 24.90625 48.390625 20.390625 44.140625 
 Q 15.875 39.890625 15.1875 32.171875 
 z
-" id="DejaVuSans-101" />
+" id="DejaVuSans-101"></path>
        <path d="M 14.796875 27.296875 
 Q 14.796875 17.390625 18.875 11.75 
 Q 22.953125 6.109375 30.078125 6.109375 
@@ -983,7 +1016,7 @@ L 54.390625 54.6875
 L 54.390625 -20.796875 
 L 45.40625 -20.796875 
 z
-" id="DejaVuSans-113" />
+" id="DejaVuSans-113"></path>
        <path d="M 8.5 21.578125 
 L 8.5 54.6875 
 L 17.484375 54.6875 
@@ -1004,7 +1037,7 @@ Q 8.5 10.296875 8.5 21.578125
 z
 M 31.109375 56 
 z
-" id="DejaVuSans-117" />
+" id="DejaVuSans-117"></path>
        <path d="M 54.890625 33.015625 
 L 54.890625 0 
 L 45.90625 0 
@@ -1023,7 +1056,7 @@ Q 30.078125 56 35.796875 56
 Q 45.21875 56 50.046875 50.171875 
 Q 54.890625 44.34375 54.890625 33.015625 
 z
-" id="DejaVuSans-110" />
+" id="DejaVuSans-110"></path>
        <path d="M 48.78125 52.59375 
 L 48.78125 44.1875 
 Q 44.96875 46.296875 41.140625 47.34375 
@@ -1044,7 +1077,7 @@ Q 20.21875 56 33.015625 56
 Q 37.15625 56 41.109375 55.140625 
 Q 45.0625 54.296875 48.78125 52.59375 
 z
-" id="DejaVuSans-99" />
+" id="DejaVuSans-99"></path>
        <path d="M 32.171875 -5.078125 
 Q 28.375 -14.84375 24.75 -17.8125 
 Q 21.140625 -20.796875 15.09375 -20.796875 
@@ -1060,39 +1093,39 @@ L 29.59375 11.921875
 L 46.6875 54.6875 
 L 56.203125 54.6875 
 z
-" id="DejaVuSans-121" />
+" id="DejaVuSans-121"></path>
       </defs>
-      <use xlink:href="#DejaVuSans-70" />
-      <use x="50.269531" xlink:href="#DejaVuSans-114" />
-      <use x="89.132812" xlink:href="#DejaVuSans-101" />
-      <use x="150.65625" xlink:href="#DejaVuSans-113" />
-      <use x="214.132812" xlink:href="#DejaVuSans-117" />
-      <use x="277.511719" xlink:href="#DejaVuSans-101" />
-      <use x="339.035156" xlink:href="#DejaVuSans-110" />
-      <use x="402.414062" xlink:href="#DejaVuSans-99" />
-      <use x="457.394531" xlink:href="#DejaVuSans-121" />
+      <use xlink:href="#DejaVuSans-70"></use>
+      <use x="50.269531" xlink:href="#DejaVuSans-114"></use>
+      <use x="89.132812" xlink:href="#DejaVuSans-101"></use>
+      <use x="150.65625" xlink:href="#DejaVuSans-113"></use>
+      <use x="214.132812" xlink:href="#DejaVuSans-117"></use>
+      <use x="277.511719" xlink:href="#DejaVuSans-101"></use>
+      <use x="339.035156" xlink:href="#DejaVuSans-110"></use>
+      <use x="402.414062" xlink:href="#DejaVuSans-99"></use>
+      <use x="457.394531" xlink:href="#DejaVuSans-121"></use>
      </g>
     </g>
    </g>
    <g id="patch_13">
     <path d="M 53.328125 266.632875 
 L 53.328125 49.192875 
-" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;" />
+" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;"></path>
    </g>
    <g id="patch_14">
     <path d="M 388.128125 266.632875 
 L 388.128125 49.192875 
-" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;" />
+" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;"></path>
    </g>
    <g id="patch_15">
     <path d="M 53.328125 266.632875 
 L 388.128125 266.632875 
-" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;" />
+" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;"></path>
    </g>
    <g id="patch_16">
     <path d="M 53.328125 49.192875 
 L 388.128125 49.192875 
-" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;" />
+" style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;"></path>
    </g>
    <g id="text_17">
     <!-- True     2010 -->
@@ -1107,22 +1140,22 @@ L 25.59375 0
 L 25.59375 64.59375 
 L -0.296875 64.59375 
 z
-" id="DejaVuSans-84" />
-      <path id="DejaVuSans-32" />
+" id="DejaVuSans-84"></path>
+      <path id="DejaVuSans-32"></path>
      </defs>
-     <use xlink:href="#DejaVuSans-84" />
-     <use x="46.333984" xlink:href="#DejaVuSans-114" />
-     <use x="87.447266" xlink:href="#DejaVuSans-117" />
-     <use x="150.826172" xlink:href="#DejaVuSans-101" />
-     <use x="212.349609" xlink:href="#DejaVuSans-32" />
-     <use x="244.136719" xlink:href="#DejaVuSans-32" />
-     <use x="275.923828" xlink:href="#DejaVuSans-32" />
-     <use x="307.710938" xlink:href="#DejaVuSans-32" />
-     <use x="339.498047" xlink:href="#DejaVuSans-32" />
-     <use x="371.285156" xlink:href="#DejaVuSans-50" />
-     <use x="434.908203" xlink:href="#DejaVuSans-48" />
-     <use x="498.53125" xlink:href="#DejaVuSans-49" />
-     <use x="562.154297" xlink:href="#DejaVuSans-48" />
+     <use xlink:href="#DejaVuSans-84"></use>
+     <use x="46.333984" xlink:href="#DejaVuSans-114"></use>
+     <use x="87.447266" xlink:href="#DejaVuSans-117"></use>
+     <use x="150.826172" xlink:href="#DejaVuSans-101"></use>
+     <use x="212.349609" xlink:href="#DejaVuSans-32"></use>
+     <use x="244.136719" xlink:href="#DejaVuSans-32"></use>
+     <use x="275.923828" xlink:href="#DejaVuSans-32"></use>
+     <use x="307.710938" xlink:href="#DejaVuSans-32"></use>
+     <use x="339.498047" xlink:href="#DejaVuSans-32"></use>
+     <use x="371.285156" xlink:href="#DejaVuSans-50"></use>
+     <use x="434.908203" xlink:href="#DejaVuSans-48"></use>
+     <use x="498.53125" xlink:href="#DejaVuSans-49"></use>
+     <use x="562.154297" xlink:href="#DejaVuSans-48"></use>
     </g>
     <!-- False    1990 -->
     <g style="fill:#ffffff;" transform="translate(182.765938 29.7555)scale(0.12 -0.12)">
@@ -1158,13 +1191,13 @@ Q 24.21875 56 28.609375 56
 Q 40.484375 56 46.34375 49.84375 
 Q 52.203125 43.703125 52.203125 31.203125 
 z
-" id="DejaVuSans-97" />
+" id="DejaVuSans-97"></path>
       <path d="M 9.421875 75.984375 
 L 18.40625 75.984375 
 L 18.40625 0 
 L 9.421875 0 
 z
-" id="DejaVuSans-108" />
+" id="DejaVuSans-108"></path>
       <path d="M 44.28125 53.078125 
 L 44.28125 44.578125 
 Q 40.484375 46.53125 36.375 47.5 
@@ -1195,7 +1228,7 @@ Q 16.75 56 26.8125 56
 Q 31.78125 56 36.171875 55.265625 
 Q 40.578125 54.546875 44.28125 53.078125 
 z
-" id="DejaVuSans-115" />
+" id="DejaVuSans-115"></path>
       <path d="M 10.984375 1.515625 
 L 10.984375 10.5 
 Q 14.703125 8.734375 18.5 7.8125 
@@ -1225,21 +1258,21 @@ Q 16.21875 57.28125 16.21875 49.421875
 Q 16.21875 41.5 20.09375 36.953125 
 Q 23.96875 32.421875 30.609375 32.421875 
 z
-" id="DejaVuSans-57" />
+" id="DejaVuSans-57"></path>
      </defs>
-     <use xlink:href="#DejaVuSans-70" />
-     <use x="48.394531" xlink:href="#DejaVuSans-97" />
-     <use x="109.673828" xlink:href="#DejaVuSans-108" />
-     <use x="137.457031" xlink:href="#DejaVuSans-115" />
-     <use x="189.556641" xlink:href="#DejaVuSans-101" />
-     <use x="251.080078" xlink:href="#DejaVuSans-32" />
-     <use x="282.867188" xlink:href="#DejaVuSans-32" />
-     <use x="314.654297" xlink:href="#DejaVuSans-32" />
-     <use x="346.441406" xlink:href="#DejaVuSans-32" />
-     <use x="378.228516" xlink:href="#DejaVuSans-49" />
-     <use x="441.851562" xlink:href="#DejaVuSans-57" />
-     <use x="505.474609" xlink:href="#DejaVuSans-57" />
-     <use x="569.097656" xlink:href="#DejaVuSans-48" />
+     <use xlink:href="#DejaVuSans-70"></use>
+     <use x="48.394531" xlink:href="#DejaVuSans-97"></use>
+     <use x="109.673828" xlink:href="#DejaVuSans-108"></use>
+     <use x="137.457031" xlink:href="#DejaVuSans-115"></use>
+     <use x="189.556641" xlink:href="#DejaVuSans-101"></use>
+     <use x="251.080078" xlink:href="#DejaVuSans-32"></use>
+     <use x="282.867188" xlink:href="#DejaVuSans-32"></use>
+     <use x="314.654297" xlink:href="#DejaVuSans-32"></use>
+     <use x="346.441406" xlink:href="#DejaVuSans-32"></use>
+     <use x="378.228516" xlink:href="#DejaVuSans-49"></use>
+     <use x="441.851562" xlink:href="#DejaVuSans-57"></use>
+     <use x="505.474609" xlink:href="#DejaVuSans-57"></use>
+     <use x="569.097656" xlink:href="#DejaVuSans-48"></use>
     </g>
     <!-- Name: y, dtype: int64 -->
     <g style="fill:#ffffff;" transform="translate(155.135 43.192875)scale(0.12 -0.12)">
@@ -1255,7 +1288,7 @@ L 19.390625 60.984375
 L 19.390625 0 
 L 9.8125 0 
 z
-" id="DejaVuSans-78" />
+" id="DejaVuSans-78"></path>
       <path d="M 52 44.1875 
 Q 55.375 50.25 60.0625 53.125 
 Q 64.75 56 71.09375 56 
@@ -1285,7 +1318,7 @@ Q 29.78125 56 35.6875 56
 Q 41.65625 56 45.828125 52.96875 
 Q 50 49.953125 52 44.1875 
 z
-" id="DejaVuSans-109" />
+" id="DejaVuSans-109"></path>
       <path d="M 11.71875 12.40625 
 L 22.015625 12.40625 
 L 22.015625 0 
@@ -1296,7 +1329,7 @@ L 22.015625 51.703125
 L 22.015625 39.3125 
 L 11.71875 39.3125 
 z
-" id="DejaVuSans-58" />
+" id="DejaVuSans-58"></path>
       <path d="M 11.71875 12.40625 
 L 22.015625 12.40625 
 L 22.015625 4 
@@ -1304,7 +1337,7 @@ L 14.015625 -11.625
 L 7.71875 -11.625 
 L 11.71875 4 
 z
-" id="DejaVuSans-44" />
+" id="DejaVuSans-44"></path>
       <path d="M 45.40625 46.390625 
 L 45.40625 75.984375 
 L 54.390625 75.984375 
@@ -1330,7 +1363,7 @@ Q 37.203125 48.484375 30.078125 48.484375
 Q 22.953125 48.484375 18.875 42.84375 
 Q 14.796875 37.203125 14.796875 27.296875 
 z
-" id="DejaVuSans-100" />
+" id="DejaVuSans-100"></path>
       <path d="M 18.3125 70.21875 
 L 18.3125 54.6875 
 L 36.8125 54.6875 
@@ -1350,7 +1383,7 @@ L 2.6875 54.6875
 L 9.28125 54.6875 
 L 9.28125 70.21875 
 z
-" id="DejaVuSans-116" />
+" id="DejaVuSans-116"></path>
       <path d="M 18.109375 8.203125 
 L 18.109375 -20.796875 
 L 9.078125 -20.796875 
@@ -1376,7 +1409,7 @@ Q 26.265625 6.109375 33.40625 6.109375
 Q 40.53125 6.109375 44.609375 11.75 
 Q 48.6875 17.390625 48.6875 27.296875 
 z
-" id="DejaVuSans-112" />
+" id="DejaVuSans-112"></path>
       <path d="M 9.421875 54.6875 
 L 18.40625 54.6875 
 L 18.40625 0 
@@ -1387,37 +1420,37 @@ L 18.40625 75.984375
 L 18.40625 64.59375 
 L 9.421875 64.59375 
 z
-" id="DejaVuSans-105" />
+" id="DejaVuSans-105"></path>
      </defs>
-     <use xlink:href="#DejaVuSans-78" />
-     <use x="74.804688" xlink:href="#DejaVuSans-97" />
-     <use x="136.083984" xlink:href="#DejaVuSans-109" />
-     <use x="233.496094" xlink:href="#DejaVuSans-101" />
-     <use x="295.019531" xlink:href="#DejaVuSans-58" />
-     <use x="328.710938" xlink:href="#DejaVuSans-32" />
-     <use x="360.498047" xlink:href="#DejaVuSans-121" />
-     <use x="419.677734" xlink:href="#DejaVuSans-44" />
-     <use x="451.464844" xlink:href="#DejaVuSans-32" />
-     <use x="483.251953" xlink:href="#DejaVuSans-100" />
-     <use x="546.728516" xlink:href="#DejaVuSans-116" />
-     <use x="585.9375" xlink:href="#DejaVuSans-121" />
-     <use x="645.117188" xlink:href="#DejaVuSans-112" />
-     <use x="708.59375" xlink:href="#DejaVuSans-101" />
-     <use x="770.117188" xlink:href="#DejaVuSans-58" />
-     <use x="803.808594" xlink:href="#DejaVuSans-32" />
-     <use x="835.595703" xlink:href="#DejaVuSans-105" />
-     <use x="863.378906" xlink:href="#DejaVuSans-110" />
-     <use x="926.757812" xlink:href="#DejaVuSans-116" />
-     <use x="965.966797" xlink:href="#DejaVuSans-54" />
-     <use x="1029.589844" xlink:href="#DejaVuSans-52" />
+     <use xlink:href="#DejaVuSans-78"></use>
+     <use x="74.804688" xlink:href="#DejaVuSans-97"></use>
+     <use x="136.083984" xlink:href="#DejaVuSans-109"></use>
+     <use x="233.496094" xlink:href="#DejaVuSans-101"></use>
+     <use x="295.019531" xlink:href="#DejaVuSans-58"></use>
+     <use x="328.710938" xlink:href="#DejaVuSans-32"></use>
+     <use x="360.498047" xlink:href="#DejaVuSans-121"></use>
+     <use x="419.677734" xlink:href="#DejaVuSans-44"></use>
+     <use x="451.464844" xlink:href="#DejaVuSans-32"></use>
+     <use x="483.251953" xlink:href="#DejaVuSans-100"></use>
+     <use x="546.728516" xlink:href="#DejaVuSans-116"></use>
+     <use x="585.9375" xlink:href="#DejaVuSans-121"></use>
+     <use x="645.117188" xlink:href="#DejaVuSans-112"></use>
+     <use x="708.59375" xlink:href="#DejaVuSans-101"></use>
+     <use x="770.117188" xlink:href="#DejaVuSans-58"></use>
+     <use x="803.808594" xlink:href="#DejaVuSans-32"></use>
+     <use x="835.595703" xlink:href="#DejaVuSans-105"></use>
+     <use x="863.378906" xlink:href="#DejaVuSans-110"></use>
+     <use x="926.757812" xlink:href="#DejaVuSans-116"></use>
+     <use x="965.966797" xlink:href="#DejaVuSans-54"></use>
+     <use x="1029.589844" xlink:href="#DejaVuSans-52"></use>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pd2930dcf78">
-   <rect height="217.44" width="334.8" x="53.328125" y="49.192875" />
-  </clipPath>
+  <clippath id="pd2930dcf78">
+   <rect height="217.44" width="334.8" x="53.328125" y="49.192875"></rect>
+  </clippath>
  </defs>
 </svg>
 
@@ -1431,17 +1464,25 @@ z
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see an equal distribution of positive (<code>True</code>) and negative (<code>False</code>) $1500$-mer training instances (a nice thing to have, but not something we can necessarily count on in the real world!). In fact, the same class proportion and sequence length holds true for the test and validation splits (the former being especially unlikely).</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Machine-Learning">Machine Learning<a class="anchor-link" href="#Machine-Learning"> </a></h2><p>We aim to build a classifer to predict functional motifs given sequences. Formally, we learn a function $f(X)=\vec{y}$ that, given the nature of deep learning networks, fits with non-linearity a probability density function $f=P(y|X;\theta)$. The task is to learn a weights matrix $W\subset \theta$ (a subset since our network may be more complicated) approximating the true class posterior distribution, such that when we call $f(x_{novel})$, we get $\hat{y}\approx y_{true}$, where $y\in \{0,1\} = \{\text{motif,non-motif}\}$.</p>
-<h3 id="Task:">Task:<a class="anchor-link" href="#Task:"> </a></h3><p>We aim to train a CNN to classify the sequences as positive or negative for homotypic motif clusters. A CNN should be a good choice due to the natural shift-invariance of the architecture. When used on images, CNNs are feature-aware but, importantly, location-agnostic. We want the same approach to motif finding since such subsequences may appear anywhere in the $1500$-mer instances.</p>
+<h2 id="Machine-Learning">
+<a class="anchor" href="#Machine-Learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine Learning<a class="anchor-link" href="#Machine-Learning"> </a>
+</h2>
+<p>We aim to build a classifer to predict functional motifs given sequences. Formally, we learn a function $f(X)=\vec{y}$ that, given the nature of deep learning networks, fits with non-linearity a probability density function $f=P(y|X;\theta)$. The task is to learn a weights matrix $W\subset \theta$ (a subset since our network may be more complicated) approximating the true class posterior distribution, such that when we call $f(x_{novel})$, we get $\hat{y}\approx y_{true}$, where $y\in \{0,1\} = \{\text{motif,non-motif}\}$.</p>
+<h3 id="Task:">
+<a class="anchor" href="#Task:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task:<a class="anchor-link" href="#Task:"> </a>
+</h3>
+<p>We aim to train a CNN to classify the sequences as positive or negative for homotypic motif clusters. A CNN should be a good choice due to the natural shift-invariance of the architecture. When used on images, CNNs are feature-aware but, importantly, location-agnostic. We want the same approach to motif finding since such subsequences may appear anywhere in the $1500$-mer instances.</p>
 <p>One-Hot Basic CNN:</p>
 
 <pre><code>    - CNNs on static one-hot embedded nucleotides.
@@ -1464,7 +1505,8 @@ z
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I will begin by defining the requisite PyTorch <code>Dataset</code> and <code>Dataloader</code> classes, as well as an extensible <code>LightningModule</code> for use across models.</p>
 
@@ -1514,7 +1556,8 @@ z
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>Dataset</code> class is now defined with associated preprocessing methods:</p>
 
@@ -1529,14 +1572,14 @@ z
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNADataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DNA / Pytorch dataset.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;one-hot&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""DNA / Pytorch dataset."""</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'one-hot'</span><span class="p">):</span>
+        <span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            data (np.array): Path to the url .npz file with annotations.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_encoding</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="k">if</span> <span class="n">encoding</span><span class="o">==</span><span class="s1">&#39;one-hot&#39;</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_encoding</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_encoding</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="k">if</span> <span class="n">encoding</span><span class="o">==</span><span class="s1">'one-hot'</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_encoding</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
             <span class="c1">#NOTE: we need this to be a float to accommodate nn.BCEWithLogitsLoss() later to match logit input.</span>
 
@@ -1544,17 +1587,17 @@ z
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-        <span class="n">sample</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]}</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'X'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="s1">'y'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]}</span>
         <span class="k">return</span> <span class="n">sample</span>
 
     <span class="k">def</span> <span class="nf">one_hot_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">seq_array</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        :param seq_array: np array of DNA sequences</span>
 <span class="sd">        :return: np array of one-hot encodings of input DNA sequences of shape N,S,M,</span>
 <span class="sd">                where N is the number of instances, S is the cardinality of the corpus,</span>
 <span class="sd">                and M is the length of each sequence.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">nuc2id</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="sd">        """</span>
+        <span class="n">nuc2id</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'A'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'C'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'T'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'G'</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq_array</span><span class="p">)</span>
         <span class="n">S</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nuc2id</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -1562,7 +1605,7 @@ z
 
         <span class="n">onehot_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">M</span><span class="p">))</span>
         
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Nucelotides -&gt; One-Hot&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Nucelotides -&gt; One-Hot'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">seq_num</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq_array</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">nucleotide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
                 <span class="n">nuc_idx</span> <span class="o">=</span> <span class="n">nuc2id</span><span class="p">[</span><span class="n">nucleotide</span><span class="p">]</span>
@@ -1571,16 +1614,16 @@ z
         <span class="k">return</span> <span class="n">onehot_array</span>
 
     <span class="k">def</span> <span class="nf">embedding_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        :param seq_array: np array of DNA sequences</span>
 <span class="sd">        :return: np array of integer encodings of input DNA sequences</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">nuc2id</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="sd">        """</span>
+        <span class="n">nuc2id</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'A'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'C'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'T'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'G'</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq_array</span><span class="p">)</span>
         <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#since we know each sequence is the same length</span>
 
         <span class="n">int_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Nucleotides -&gt; Integers&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Nucleotides -&gt; Integers'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">seq_num</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq_array</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">nucleotide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
                 <span class="n">nuc_idx</span> <span class="o">=</span> <span class="n">nuc2id</span><span class="p">[</span><span class="n">nucleotide</span><span class="p">]</span>
@@ -1588,7 +1631,7 @@ z
         <span class="k">return</span> <span class="n">int_array</span>
 
 <span class="k">class</span> <span class="nc">DNADataModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningDataModule</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;one-hot&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'one-hot'</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_fpath</span> <span class="o">=</span> <span class="n">data_dir</span>
@@ -1597,9 +1640,9 @@ z
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_fpath</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">DNADataset</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s1">&#39;train_seq&#39;</span><span class="p">],</span><span class="n">all_data</span><span class="p">[</span><span class="s1">&#39;train_y&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">val</span>   <span class="o">=</span> <span class="n">DNADataset</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s1">&#39;train_seq&#39;</span><span class="p">],</span><span class="n">all_data</span><span class="p">[</span><span class="s1">&#39;train_y&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">test</span>  <span class="o">=</span> <span class="n">DNADataset</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s1">&#39;test_seq&#39;</span><span class="p">],</span> <span class="n">all_data</span><span class="p">[</span><span class="s1">&#39;test_y&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">DNADataset</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s1">'train_seq'</span><span class="p">],</span><span class="n">all_data</span><span class="p">[</span><span class="s1">'train_y'</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span>   <span class="o">=</span> <span class="n">DNADataset</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s1">'train_seq'</span><span class="p">],</span><span class="n">all_data</span><span class="p">[</span><span class="s1">'train_y'</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test</span>  <span class="o">=</span> <span class="n">DNADataset</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s1">'test_seq'</span><span class="p">],</span> <span class="n">all_data</span><span class="p">[</span><span class="s1">'test_y'</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
@@ -1625,9 +1668,9 @@ z
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_onehot</span> <span class="o">=</span> <span class="n">DNADataModule</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;./data_dna_cnn/hw1_data.npz&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;one-hot&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_onehot</span> <span class="o">=</span> <span class="n">DNADataModule</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">'./data_dna_cnn/hw1_data.npz'</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'one-hot'</span><span class="p">)</span>
 <span class="n">dm_onehot</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-<span class="n">dm_int</span> <span class="o">=</span> <span class="n">DNADataModule</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;./data_dna_cnn/hw1_data.npz&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span> <span class="c1">#for use with 2nd CNN and Transformer</span>
+<span class="n">dm_int</span> <span class="o">=</span> <span class="n">DNADataModule</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">'./data_dna_cnn/hw1_data.npz'</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'int'</span><span class="p">)</span> <span class="c1">#for use with 2nd CNN and Transformer</span>
 <span class="n">dm_int</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 </pre></div>
 
@@ -1657,16 +1700,24 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model-Instantiation">Model Instantiation<a class="anchor-link" href="#Model-Instantiation"> </a></h2><p>We can now define models to be instantiated in the main Pytorch <code>LightningModule</code>.</p>
+<h2 id="Model-Instantiation">
+<a class="anchor" href="#Model-Instantiation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Instantiation<a class="anchor-link" href="#Model-Instantiation"> </a>
+</h2>
+<p>We can now define models to be instantiated in the main Pytorch <code>LightningModule</code>.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Basic-CNN">Basic CNN<a class="anchor-link" href="#Basic-CNN"> </a></h3><p>Again, we define a convolutional neural net on static, one-hot embedded nucleotides. For now, I will use a single 1-Dimensional Convolution layer (+ nonlinearity + flattening) and one dense (<code>linear</code> + activation) output layer. This model will make use of the <code>dm_onehot</code> data module defined and instantiated above.</p>
+<h3 id="Basic-CNN">
+<a class="anchor" href="#Basic-CNN" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic CNN<a class="anchor-link" href="#Basic-CNN"> </a>
+</h3>
+<p>Again, we define a convolutional neural net on static, one-hot embedded nucleotides. For now, I will use a single 1-Dimensional Convolution layer (+ nonlinearity + flattening) and one dense (<code>linear</code> + activation) output layer. This model will make use of the <code>dm_onehot</code> data module defined and instantiated above.</p>
 <p>As you might remember from above, we one-hot encoded each sequence using a dictionay of nucleotides to integers, and then encoded a 4-channel NumPy binary array using the indices of this dictionary. When placed into the dataset class with a batch-size parameter, we can finally see what the network sees per "minibatch" of sequences. I say "minibatch" because technically each shuffled pass during a stochastic gradient descent epoch is commonly referred to as a batch.</p>
 <p>Please see <a href="https://colab.research.google.com/github/Avsecz/DL-genomics-exercise/blob/master/Simulated.ipynb#scrollTo=MYVEEl0zZwlr">https://colab.research.google.com/github/Avsecz/DL-genomics-exercise/blob/master/Simulated.ipynb#scrollTo=MYVEEl0zZwlr</a> for the Keras model I've based my implementation on.</p>
 <p>At any rate, the model views a tensor from the dataloader of the following shape (note this is also a nice way to access a sample instance from the dataloader directly):</p>
@@ -1681,7 +1732,7 @@ Nucleotides -&gt; Integers
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_onehot</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dm_onehot</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_onehot</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dm_onehot</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))[</span><span class="s1">'X'</span><span class="p">]</span>
 <span class="n">x_sample_onehot</span>
 </pre></div>
 
@@ -1771,7 +1822,8 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So, we have a fixed one-hot tensor of shape $(N,C,L)$, just like the Pytorch <code>nn.Conv1d</code> will expect. Note that we use $1$-D here since we have sequential data.</p>
 
@@ -1809,9 +1861,13 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CNN-with-Trainable-Embeddings">CNN with Trainable Embeddings<a class="anchor-link" href="#CNN-with-Trainable-Embeddings"> </a></h3><p>Now, for the embedding case, I will essentially "recreate" a learnable one-hot embedding. That is, we can directly compare the outcome of a learnable <code>nn.embedding</code> versus a fixed one-hot vector per sequence minibatch by being creative with dimensions.</p>
+<h3 id="CNN-with-Trainable-Embeddings">
+<a class="anchor" href="#CNN-with-Trainable-Embeddings" aria-hidden="true"><span class="octicon octicon-link"></span></a>CNN with Trainable Embeddings<a class="anchor-link" href="#CNN-with-Trainable-Embeddings"> </a>
+</h3>
+<p>Now, for the embedding case, I will essentially "recreate" a learnable one-hot embedding. That is, we can directly compare the outcome of a learnable <code>nn.embedding</code> versus a fixed one-hot vector per sequence minibatch by being creative with dimensions.</p>
 
 </div>
 </div>
@@ -1823,7 +1879,7 @@ Nucleotides -&gt; Integers
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_int</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dm_int</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_sample_int</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dm_int</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))[</span><span class="s1">'X'</span><span class="p">]</span>
 <span class="n">x_sample_int</span><span class="o">.</span><span class="n">shape</span> <span class="c1">#batch_size, channels, length</span>
 </pre></div>
 
@@ -1884,7 +1940,8 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Note that this looks identical to the one-hot encoding. However, we can take a look at the values:</p>
 
@@ -1955,7 +2012,8 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Note that the tensor is initially randomized float values. But, unlike the one-hot case, these values (this lookup table) will be <em>trained/adjusted during backpropagation</em>!</p>
 
@@ -1994,14 +2052,19 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="The-DNA-Transformer!">The DNA Transformer!<a class="anchor-link" href="#The-DNA-Transformer!"> </a></h3><p>Let's create a class using HuggingFace within an nn.module.</p>
+<h3 id="The-DNA-Transformer!">
+<a class="anchor" href="#The-DNA-Transformer!" aria-hidden="true"><span class="octicon octicon-link"></span></a>The DNA Transformer!<a class="anchor-link" href="#The-DNA-Transformer!"> </a>
+</h3>
+<p>Let's create a class using HuggingFace within an nn.module.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Note that for the Transformer, I will be pulling an <em>untrained</em> model from Huggingface. That involves invoking the <code>config</code> of the desired model, but instantiating the model itself from the config only (<strong><em>not</em></strong> <code>from_pretrained</code>). I think this is actually quite annoying and could warrant a pull request at a future date (there ought to be a flag like <code>.from_untrained</code>).</p>
 <p>As for the tokenizer, we don't really need the actual model's tokenizer with associated vocabulary, etc., since we can just map each nucleotide to an integer. This should be equivalent to character-level tokenization of each nucleotide with an untrained vocabulary, but also allowed for the use of <code>nn.Embedding()</code> for the second CNN (detailed above).</p>
@@ -2018,7 +2081,7 @@ Nucleotides -&gt; Integers
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span>
-    <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;xlnet-base-cased&#39;</span><span class="p">)</span>
+    <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">'xlnet-base-cased'</span><span class="p">)</span>
     <span class="p">)</span>
 <span class="n">model</span>
 </pre></div>
@@ -2215,7 +2278,8 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The transformer model is currently instantiated for classification (<code>model.logits_proj</code> has <code>out_features=2</code>). Note that we will need to take some form of activation across these logits (sigmoid, or even plain argmax). We can use <code>BCEWithLogits</code> (binary cross entropy with logits) to accomplish this.</p>
 <p>Note due to the nature of binary (versus multlabel) classification, that we could instead have a <em>single</em> neuron output and use sigmoidal activation (analagous to logistic regression).</p>
@@ -2259,7 +2323,8 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Perfect! This will be incorporated below.</p>
 <p>In short, this step allows us to create a black-box network while keeping all of the business of training each of these three models as similar as possible (same loss, same <code>LightningModule</code>, etc., and I'm sure there are even more concise methods).</p>
@@ -2275,7 +2340,7 @@ Nucleotides -&gt; Integers
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DNATransformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">transformer_checkpoint</span><span class="o">=</span><span class="s1">&#39;xlnet-base-cased&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">transformer_checkpoint</span><span class="o">=</span><span class="s1">'xlnet-base-cased'</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DNATransformer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
         <span class="c1">#Load untrained model using checkpointed config.</span>
@@ -2294,9 +2359,13 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Integration:-The-Training-Module">Integration: The Training Module<a class="anchor-link" href="#Integration:-The-Training-Module"> </a></h3><p>Now, the three models defined above are ready to be invoked into during train, test, and inference. We can organize this under a <code>LightningModule</code>:</p>
+<h3 id="Integration:-The-Training-Module">
+<a class="anchor" href="#Integration:-The-Training-Module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Integration: The Training Module<a class="anchor-link" href="#Integration:-The-Training-Module"> </a>
+</h3>
+<p>Now, the three models defined above are ready to be invoked into during train, test, and inference. We can organize this under a <code>LightningModule</code>:</p>
 
 </div>
 </div>
@@ -2317,27 +2386,27 @@ Nucleotides -&gt; Integers
 
     <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
         <span class="c1"># --------------------------</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">'X'</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#take the most probable index.</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;train_loss&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'train_loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">loss</span>
         <span class="c1"># --------------------------</span>
 
     <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
         <span class="c1"># --------------------------</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">'X'</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'val_loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
         <span class="c1"># --------------------------</span>
 
     <span class="k">def</span> <span class="nf">test_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
         <span class="c1"># --------------------------</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">'X'</span><span class="p">],</span><span class="n">batch</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;test_loss&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'test_loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
         <span class="c1"># --------------------------</span>
 
     <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2352,17 +2421,25 @@ Nucleotides -&gt; Integers
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Training">Training<a class="anchor-link" href="#Training"> </a></h2><p>We are now ready to train the selection of models.</p>
+<h2 id="Training">
+<a class="anchor" href="#Training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training<a class="anchor-link" href="#Training"> </a>
+</h2>
+<p>We are now ready to train the selection of models.</p>
 <ul>
-<li><p>Datamodules ✔️</p>
+<li>
+<p>Datamodules ✔️</p>
 </li>
-<li><p>CNN ✔️</p>
+<li>
+<p>CNN ✔️</p>
 </li>
-<li><p>CNN with Embeddings ✔️</p>
+<li>
+<p>CNN with Embeddings ✔️</p>
 </li>
-<li><p>Transformer ✔️</p>
+<li>
+<p>Transformer ✔️</p>
 </li>
 </ul>
 <p>Time to train!</p>
@@ -2574,7 +2651,8 @@ Epoch 0: 100%|██████████| 2/2 [00:00&lt;00:00,  8.90it/s, lo
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>These models range in complexity greatly, and my hope is this will serve as a future-proof skeleton for a number of implementations. Other variants of CNNs, RNNs, and other Pytorch objects should be facile to swap and implement, and HuggingFace will likely serve as a choice deep NLP API for some time.</p>
 
@@ -2603,7 +2681,15 @@ Epoch 0: 100%|██████████| 2/2 [00:00&lt;00:00,  8.90it/s, lo
 
 
 
-  </div><a class="u-url" href="/simonsays/2021/02/17/DNA_CNN.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="simonlevine/simonsays"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/simonsays/jupyter/2021/02/17/DNA_CNN.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
